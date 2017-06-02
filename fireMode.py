@@ -33,7 +33,7 @@ def parseFireInput(state):
 	      	status = 2
 	      if status == 1 or self.referencedCoordinate is not None and len(re.findall("(?:.*)(fire|shoot)(?:.*)", userInput)) > 0:
 	      	#coordinates were parsed. firing at input target. add target to list. return whether target was hit or miss.
-	      	if len(re.findall("(?:.*)(have)(?:.*)")) > 0:
+	      	if len(re.findall("(?:.*)(have)(?:.*)", userInput)) > 0:
 	      		if len(re.findall("(?:.*)(fire|target|shot|done)(?:.*)", userInput)) > 0:
 	      			if coordinates[0] in state.targeted:
 	      				print("Yes! You've already fired at this location!")
@@ -56,7 +56,7 @@ def parseFireInput(state):
 		      	return coordinates[0]
 
 	      elif status == 2: #coordinates has more than 1
-	      	if len(re.findall("(?:.*)(have)(?:.*)")) > 0:
+	      	if len(re.findall("(?:.*)(have)(?:.*)", userInput)) > 0:
 	      		if len(re.findall("(?:.*)(fire|target|shot|done)(?:.*)", userInput)) > 0:
 	      			if len(state.targeted) > 0:
 		      			print("You have already targeted the following coordinates: ")

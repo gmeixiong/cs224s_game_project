@@ -28,8 +28,8 @@ class State():
                 self.playerBoard[coordinate[0]][coordinate[1]] = "S"
 
     def fire(coordinate, player, cpu):
-        row = coordinate[0]
-        col = coordinate[1]
+        row = coordinate[0]-1
+        col = coordinate[1]-1
         if player == 1:
             if playerBoard[row][col] == "S":
                 playerBoard[row][col] = "H"

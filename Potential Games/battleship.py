@@ -7,6 +7,7 @@ class State():
         self.playerBoard = initializeBoard()
         self.cpuBoard = initializeBoard()
         self.totalShips = 3#per side
+        self.history = []#player, (row, col), hit/miss
 
     def initializeBoard(self):
         board = []
@@ -25,6 +26,34 @@ class State():
         elif player == 0:
             for coordinate in coordinates:
                 self.playerBoard[coordinate[0]][coordinate[1]] = "S"
+
+    def fire(coordinate, player, cpu):
+        row = coordinate[0]
+        col = coordinate[1]
+        if player == 1:
+            if playerBoard[row][col] == "S":
+                playerBoard[row][col] = "H"
+                if cpu.firstHit == None:
+                    cpu.firstHit = coordinate
+                elif cpu.secondHit == None:
+                    cpu.secondHit = coordinate
+                else:
+                    cpu.firstHit = None
+                    cpu.secondHit = None
+                self.history.append((1, coordinate, "H"))
+            else:
+                self.history.append((1, coordinate, "M"))
+        elif player == 0:
+            if cpuBoard[row][col] == "S":
+                cpuBoard[row][col] = "H"
+                self.history.append((0, coordinate, "H"))
+            elif cpuBoard[row][col] == "O":
+                cpuBoard[row][col] = "M"
+                self.history.append((0, coordinate, "M"))
+            else:
+                wentHere = True
+                #####They already went here
+
 
 class CPU():
     def __init__(self):

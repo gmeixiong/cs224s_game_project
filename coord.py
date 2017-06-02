@@ -153,21 +153,21 @@ def get_coord(userInput):
 
       return coordinates
 
-loop = 3
-while loop == 3:
-      print("---------------------------------------------------------")
-      print("Welcome to Battleships")
-      print("Note: please type all our reponses in quotes.")
-      print("---------------------------------------------------------")
+# loop = 3
+# while loop == 3:
+#       print("---------------------------------------------------------")
+#       print("Welcome to Battleships")
+#       print("Note: please type all our reponses in quotes.")
+#       print("---------------------------------------------------------")
 
-      # First Screen and Input
-      userInput = raw_input("Where would you like to place your ship? ")
+#       # First Screen and Input
+#       userInput = raw_input("Where would you like to place your ship? ")
 
-      coordinates = []
+#       coordinates = []
 
-      coordinates = get_coord(userInput)
+#       coordinates = get_coord(userInput)
 
-      print coordinates
+#       print coordinates
 
 
 

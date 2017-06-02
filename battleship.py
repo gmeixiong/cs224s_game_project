@@ -1,5 +1,6 @@
 from random import randint
-
+from fireMode import *
+# from coord.py import *
 #initializing board
 
 class State():
@@ -243,9 +244,10 @@ for i in range(0, state.totalShips):
 
 #asking the user for a guess
 while True:
-    guess_row = int(raw_input("Guess Row:"))
-    guess_col = int(raw_input("Guess Col:"))
-    hit = state.fire((guess_row, guess_col), 0, cpu)
+    # guess_row = int(raw_input("Guess Row:"))
+    # guess_col = int(raw_input("Guess Col:"))
+    #hit = state.fire((guess_row, guess_col), 0, cpu)
+    hit = parseFireInput(state)
     if hit:
         print "Hit!"
         if state.checkWin():

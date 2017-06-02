@@ -1,6 +1,7 @@
 import re
 import string
 
+
 def get_coord(userInput):
       coordinates = []
       alpha = {'a':1, 'b':2, 'c':3, 'd':4, 'e':5}
@@ -167,8 +168,6 @@ while loop == 3:
       coordinates = get_coord(userInput)
 
       print coordinates
-
-
 
 
 

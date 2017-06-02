@@ -4,8 +4,8 @@ from random import randint
 
 class State():
     def __init__(self):
-        self.playerBoard = initializeBoard()
-        self.cpuBoard = initializeBoard()
+        self.playerBoard = self.initializeBoard()
+        self.cpuBoard = self.initializeBoard()
         self.totalShips = 3#per side
         self.playerShips = set([])
         self.cpuShips = set([])
@@ -18,7 +18,7 @@ class State():
         return board
 
 
-    def placeShip(coordinates, player):
+    def placeShip(self, coordinates, player):
         if player == 1:
             for coordinate in coordinates:
                 self.cpuBoard[coordinate[0]][coordinate[1]] = "S"
@@ -28,12 +28,13 @@ class State():
                 self.playerBoard[coordinate[0]][coordinate[1]] = "S"
                 self.playerShips.add(coordinate)
 
-    def fire(coordinate, player, cpu):
+
+    def fire(self, coordinate, player, cpu):
         row = coordinate[0]-1
         col = coordinate[1]-1
         if player == 1:
-            if playerBoard[row][col] == "S":
-                playerBoard[row][col] = "H"
+            if self.playerBoard[row][col] == "S":
+                self.playerBoard[row][col] = "H"
                 if cpu.firstHit == None:
                     cpu.firstHit = coordinate
                 elif cpu.secondHit == None:
@@ -48,19 +49,21 @@ class State():
                 self.history.append((1, coordinate, "M"))
                 return False
         elif player == 0:
-            if cpuBoard[row][col] == "S":
-                cpuBoard[row][col] = "H"
+            if self.cpuBoard[row][col] == "S":
+                self.cpuBoard[row][col] = "H"
                 self.history.append((0, coordinate, "H"))
+                print self.cpuShips
                 self.cpuShips.remove(coordinate)
                 return True
-            elif cpuBoard[row][col] == "O":
-                cpuBoard[row][col] = "M"
+            elif self.cpuBoard[row][col] == "O":
+                self.cpuBoard[row][col] = "M"
                 self.history.append((0, coordinate, "M"))
                 return False
             else:
                 wentHere = True
                 #####They already went here
-    def checkWin():
+
+    def checkWin(self):
         if len(state.playerShips) == 0:
             print "CPU won..."
             return True
@@ -77,12 +80,12 @@ class CPU():
         self.secondHit = None
 
     def guess(self, board):
-        if secondHit != None:
-            guess = thirdGuess(board)
-        elif firstHit != None:
-            guess = secondGuess(board)
+        if self.secondHit != None:
+            guess = self.thirdGuess(board)
+        elif self.firstHit != None:
+            guess = self.secondGuess(board)
         else:
-            guess = firstGuess(board)
+            guess = self.firstGuess(board)
         self.history.add(guess)
         return guess
 
@@ -138,75 +141,82 @@ class CPU():
                     return guess
 
     def placeShips(self, state):
+        board = state.cpuBoard
         shipPlacements = set([])
         for i in range(0, state.totalShips):
             restartNeeded = False
-            shipProw = (random_row, random_col)
+            shipProw = (self.random_row(state.cpuBoard), self.random_col(state.cpuBoard))
             possMasts = []
             hitDict = {
-                1 : (self.shipProw[0]-1, self.shipProw[1]), 
-                2 : (self.shipProw[0]+1, self.shipProw[1]), 
-                3 : (self.shipProw[0], self.shipProw[1]-1), 
-                4 : (self.shipProw[0], self.shipProw[1]+1), 
+                1 : (shipProw[0]-1, shipProw[1]), 
+                2 : (shipProw[0]+1, shipProw[1]), 
+                3 : (shipProw[0], shipProw[1]-1), 
+                4 : (shipProw[0], shipProw[1]+1), 
             }
-            if self.shipProw[0]-1 >= 0:
+            if shipProw[0]-1 >= 0:
                 possMasts.append(1)
-            if self.shipProw[0]+1 < len(board):
+            if shipProw[0]+1 < len(board):
                 possMasts.append(2)
-            if self.shipProw[1]-1 >= 0:
+            if shipProw[1]-1 >= 0:
                 possMasts.append(3)
-            if self.shipProw[1]+1 < len(board[0]):
+            if shipProw[1]+1 < len(board[0]):
                 possMasts.append(4)
-            guessIndex = possMasts[randint(0, len(possMasts-1))]
-            shipMast = hitDict(guessIndex)
-            while guess in shipPlacements:
-                if possMasts.isEmpty():
+            guessIndex = possMasts[randint(0, len(possMasts)-1)]
+            shipMast = hitDict[guessIndex]
+            while shipMast in shipPlacements:
+                if len(possMasts) == 0:
                     restartNeeded = True
                     break
-                guessIndex = possMasts[randint(0, len(possMasts-1))]
-                shipMast = hitDict(guessIndex)
+                guessIndex = possMasts[randint(0, len(possMasts)-1)]
+                shipMast = hitDict[guessIndex]
                 possMasts.remove(guessIndex)
             if restartNeeded:
                 i -= 1
                 continue
             restartNeeded = True
-            if self.shipProw[0] == self.shipMast[0]:
-                if max(self.shipProw[1], self.shipMast[1]) + 1 < len(board[0]):
-                    shipAft = (shipProw[0], max(self.shipProw[1], self.shipMast[1]) + 1)
+            if shipProw[0] == shipMast[0]:
+                if max(shipProw[1], shipMast[1]) + 1 < len(board[0]):
+                    shipAft = (shipProw[0], max(shipProw[1], shipMast[1]) + 1)
                     if shipAft not in shipPlacements:
                         shipPlacements.add(shipAft)
                         shipPlacements.add(shipProw)
                         shipPlacements.add(shipMast)
-                        state.placeShip([shipProw, shipMast, shipAft], 1)
+                        state.placeShip((shipProw, shipMast, shipAft), 1)
                         restartNeeded = False
-                if min(self.shipProw[1], self.shipMast[1]) - 1 < 0:
-                    shipAft = (shipProw[0], min(self.shipProw[1], self.shipMast[1]) - 1)
+                if min(shipProw[1], shipMast[1]) - 1 < 0:
+                    shipAft = (shipProw[0], min(shipProw[1], shipMast[1]) - 1)
                     if shipAft not in shipPlacements:
                         shipPlacements.add(shipAft)
                         shipPlacements.add(shipProw)
                         shipPlacements.add(shipMast)
-                        state.placeShip([shipProw, shipMast, shipAft], 1)
+                        state.placeShip((shipProw, shipMast, shipAft), 1)
                         restartNeeded = False
-            if self.shipProw[1] == self.shipMast[1]:#should be the case
-                if max(self.shipProw[0], self.shipMast[0]) + 1 < len(board):
-                    shipAft = (max(self.shipProw[0], self.shipMast[0]) + 1, self.shipProw[1])
+            if shipProw[1] == shipMast[1]:#should be the case
+                if max(shipProw[0], shipMast[0]) + 1 < len(board):
+                    shipAft = (max(shipProw[0], shipMast[0]) + 1, shipProw[1])
                     if shipAft not in shipPlacements:
                         shipPlacements.add(shipAft)
                         shipPlacements.add(shipProw)
                         shipPlacements.add(shipMast)
-                        state.placeShip([shipProw, shipMast, shipAft], 1)
+                        state.placeShip((shipProw, shipMast, shipAft), 1)
                         restartNeeded = False
-                if min(self.shipProw[0], self.shipMast[0]) - 1 < 0:
-                    shipAft = (min(self.shipProw[0], self.shipMast[0]) - 1, self.shipProw[1])
+                if min(shipProw[0], shipMast[0]) - 1 < 0:
+                    shipAft = (min(shipProw[0], shipMast[0]) - 1, shipProw[1])
                     if shipAft not in shipPlacements:
                         shipPlacements.add(shipAft)
                         shipPlacements.add(shipProw)
                         shipPlacements.add(shipMast)
-                        state.placeShip([shipProw, shipMast, shipAft], 1)
+                        state.placeShip((shipProw, shipMast, shipAft), 1)
                         restartNeeded = False
             if restartNeeded:
                 i -= 1
                 continue
+
+    def random_row(self, board):
+        return randint(0, len(board) - 1)
+
+    def random_col(self, board):
+        return randint(0, len(board[0]) - 1)
 
 
 
@@ -219,36 +229,32 @@ state = State()
 cpu = CPU()
 cpu.placeShips(state)
 
-for i in range(0, self.totalShips):
+for i in range(0, state.totalShips):
     inputList = raw_input("Where do you want your first ship to be?").split()
-    state.placeShip((inputList[0], inputList[1],inputList[2],inputList[3],inputList[4],inputList[5]), 0)
+    state.placeShip([(int(inputList[0]), int(inputList[1])), (int(inputList[2]), int(inputList[3])), (int(inputList[4]), int(inputList[5]))], 0)
 
 #defining where the ship is
-def random_row(board):
-    return randint(0, len(board) - 1)
 
-def random_col(board):
-    return randint(0, len(board[0]) - 1)
 
 
 #asking the user for a guess
 while True:
     guess_row = int(raw_input("Guess Row:"))
     guess_col = int(raw_input("Guess Col:"))
-    hit = state.fire((guess_row, guess_col), 0)
+    hit = state.fire((guess_row, guess_col), 0, cpu)
     if hit:
         print "Hit!"
-        if state.checkWin()
-        print "Game Over"
-        break
+        if state.checkWin():
+            print "Game Over"
+            break
     else:
         print "Miss..."
-    cpuhit = state.fire(cpu.guess(state.playerBoard))
+    cpuhit = state.fire(cpu.guess(state.playerBoard), 0, cpu)
     if cpuhit:
         print "Hit! from the CPU"
-        if state.checkWin()
-        print "Game Over"
-        break
+        if state.checkWin():
+            print "Game Over"
+            break
     else:
         print "Miss... from the CPU"
 

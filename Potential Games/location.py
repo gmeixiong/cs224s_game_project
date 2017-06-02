@@ -1,3 +1,1 @@
-a = set([])
-if a.isEmpty():
-	print "Fadfa"
+print raw_input("Hello there")

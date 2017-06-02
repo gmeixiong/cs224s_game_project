@@ -7,6 +7,7 @@ import string
 import random
 from coord.py import *
 
+##CHANGE ALL SELF.VARS TO STATE.VAR
 
 # self.targetedPoints = [] # list of all points that user has already targeted
 # self.hitPoints = [] #list of all points that user has already hit (targeted points which were successful)
@@ -35,7 +36,7 @@ def parseFireInput(self, state):
 	      				print("Yes! You've already fired at this location!")
 	      			else:
 	      				print("Nope! You haven't fired here yet!")
-	      				self.referencedCoordinate = coordinates[0]
+	      				referencedCoordinate = coordinates[0]
 	      		elif len(re.findall("(?:.*)(ship|boat)(?:.*)", userInput)) > 0:
 	      			if coordinates[0] in self.myShips:
 	      				print("Yes! You have a ship at this location.")
@@ -45,11 +46,11 @@ def parseFireInput(self, state):
 	      			print("I'm not sure what you mean! Please try again")
 	      	else:
 	      		print("Firing...")
-	      		if len(coordinates) == 0 and self.referencedCoordinate is not None:
-	      			coordinates.append(self.referencedCoordinate)
-	      		self.targetedPoints.append(coordinates[0])
-		      	self.referencedCoordinate = None
-		      	return coordinates
+	      		if len(coordinates) == 0 and referencedCoordinate is not None:
+	      			coordinates.append(referencedCoordinate)
+	      		#self.targetedPoints.append(coordinates[0]) ##
+	      		## APPEND THIS COORDINATE TO TARGETEDPOInts LIST
+		      	return coordinates[0]
 
 	      elif status == 2: #coordinates has more than 1
 	      	if len(re.findall("(?:.*)(have)(?:.*)")) > 0:
@@ -72,10 +73,10 @@ def parseFireInput(self, state):
 	      	for i in range(len(self.targetedPoints)):
 	      		print("Row: %d, Column: %d\n") % (self.targetedPoints[i][0], self.targetedPoints[i][1])
 
-	      # elif len(re.findall("(?:.*)(hit)(?:.*)", userInput)) > 0:
-	      # 	print("You have sunk ships at the following coordinates: ")
-	      # 	for i in range(len(self.hitPoints)):
-	      # 		print("Row: %d, Column: %d\n") % (self.hitPoints[i][0], self.hitPoints[i][1])
+	      elif len(re.findall("(?:.*)(hit)(?:.*)", userInput)) > 0:
+	      	print("You have sunk ships at the following coordinates: ")
+	      	for i in range(len(self.hitPoints)):
+	      		print("Row: %d, Column: %d\n") % (self.hitPoints[i][0], self.hitPoints[i][1])
 
 	      elif len(re.findall("(?:.*)(my)(?:.*)", userInput)) > 0:
 	      	print("You're ships are stationed at the following coordinates: ")

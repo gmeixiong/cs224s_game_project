@@ -8,30 +8,25 @@ import random
 from coord.py import *
 
 
-self.multipleTargetsResponses = ['Hey!! You can\'t fire at more than one place! Please try again!', 'No shooting at multiple places! Put in one coordinate!', 'Your Battleship is only equipped with one bullet per round! Please input one coordinate!',
+# self.targetedPoints = [] # list of all points that user has already targeted
+# self.hitPoints = [] #list of all points that user has already hit (targeted points which were successful)
+# self.myShips = [] #list of coordinates of user's ships. Each element of this list is a two-element list which represents row (0th element) x column (1st element)
+
+def parseFireInput(self, state):
+	referencedCoordinate = None
+	multipleTargetsResponses = ['Hey!! You can\'t fire at more than one place! Please try again!', 'No shooting at multiple places! Put in one coordinate!', 'Your Battleship is only equipped with one bullet per round! Please input one coordinate!',
 'Not enough ammo! Only enough for one coordinate!']
-
-self.targetedPoints = []
-self.hitPoints = []
-self.myShips = []
-self.referencedCoordinate = None
-
-def parseFireInput(self):
 	while True:
-	      print("---------------------------------------------------------")
-	      print("Please input a coordinate for attack!")
-	      print("---------------------------------------------------------")
-
 	      #targetGrid is a battleship grid with the opponent's ships. Thinking about numpy array
 	      #from parseCoordinates, returns 0 if parse fail and 1 if parse success, 2 if parse returns multiple coordinats. coordinates will return with the 0th element as the row and 1st element as the column
 
 	      # First Screen and Input
-	      userInput = input()
+	      userInput = raw_input("Please input a coordinate for attack!")
 	      userInput = userInput.lower()
 
 	      coordinates = []
 
-	      status = self.parseCoordinates(userInput, coordinates)
+	      status = self.parseCoordinates(userInput, coordinates) # parse coordinates will fill the coordinates list with the list of parsed coordinates. Returns 1 if 1 successful coordinate. returns 2 if more than one coordinate. Returns 0 otherwise.
 	      if status == 1 or self.referencedCoordinate is not None and len(re.findall("(?:.*)(fire|shoot)(?:.*)", userInput)) > 0:
 	      	#coordinates were parsed. firing at input target. add target to list. return whether target was hit or miss.
 	      	if len(re.findall("(?:.*)(have)(?:.*)")) > 0:
@@ -70,17 +65,17 @@ def parseFireInput(self):
 	  				for i in range(len(self.myShips)):
 	  					print("Row: %d, Column: %d\n") % (self.myShips[i][0], self.myShips[i][1])
 	  		else:
-	      		response = self.multipleTargetsResponses[random.randint(0, len(self.multipleTargetsResponses)) - 1]
+	      		response = multipleTargetsResponses[random.randint(0, len(multipleTargetsResponses)) - 1]
 	      		print response
 	      elif len(re.findall("(?:.*)(last|past|previous|fire|gone|shoot|shot)(?:.*)", userInput)) > 0:
 	      	print("You have already targeted the following coordinates: ")
 	      	for i in range(len(self.targetedPoints)):
 	      		print("Row: %d, Column: %d\n") % (self.targetedPoints[i][0], self.targetedPoints[i][1])
 
-	      elif len(re.findall("(?:.*)(hit)(?:.*)", userInput)) > 0:
-	      	print("You have sunk ships at the following coordinates: ")
-	      	for i in range(len(self.hitPoints)):
-	      		print("Row: %d, Column: %d\n") % (self.hitPoints[i][0], self.hitPoints[i][1])
+	      # elif len(re.findall("(?:.*)(hit)(?:.*)", userInput)) > 0:
+	      # 	print("You have sunk ships at the following coordinates: ")
+	      # 	for i in range(len(self.hitPoints)):
+	      # 		print("Row: %d, Column: %d\n") % (self.hitPoints[i][0], self.hitPoints[i][1])
 
 	      elif len(re.findall("(?:.*)(my)(?:.*)", userInput)) > 0:
 	      	print("You're ships are stationed at the following coordinates: ")

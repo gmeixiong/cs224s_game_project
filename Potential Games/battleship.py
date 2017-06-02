@@ -42,18 +42,32 @@ class State():
                     cpu.firstHit = None
                     cpu.secondHit = None
                 self.history.append((1, coordinate, "H"))
+                self.playerShips.remove(coordinate)
+                return True
             else:
                 self.history.append((1, coordinate, "M"))
+                return False
         elif player == 0:
             if cpuBoard[row][col] == "S":
                 cpuBoard[row][col] = "H"
                 self.history.append((0, coordinate, "H"))
+                self.cpuShips.remove(coordinate)
+                return True
             elif cpuBoard[row][col] == "O":
                 cpuBoard[row][col] = "M"
                 self.history.append((0, coordinate, "M"))
+                return False
             else:
                 wentHere = True
                 #####They already went here
+    def checkWin():
+        if len(state.playerShips) == 0:
+            print "CPU won..."
+            return True
+        if len(state.cpuShips) == 0:
+            print "Player Won!"
+            return True
+        return False
 
 
 class CPU():
@@ -221,7 +235,22 @@ def random_col(board):
 while True:
     guess_row = int(raw_input("Guess Row:"))
     guess_col = int(raw_input("Guess Col:"))
-    state.fir
+    hit = state.fire((guess_row, guess_col), 0)
+    if hit:
+        print "Hit!"
+        if state.checkWin()
+        print "Game Over"
+        break
+    else:
+        print "Miss..."
+    cpuhit = state.fire(cpu.guess(state.playerBoard))
+    if cpuhit:
+        print "Hit! from the CPU"
+        if state.checkWin()
+        print "Game Over"
+        break
+    else:
+        print "Miss... from the CPU"
 
 
 

@@ -1,1 +1,3 @@
-print 3 + int('1')
+a = set([])
+if a.isEmpty():
+	print "Fadfa"

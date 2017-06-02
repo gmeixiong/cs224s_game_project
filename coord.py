@@ -17,6 +17,7 @@ while loop == 3:
       if len(matches) > 0:
             for i in xrange(len(matches)):
                   coordinates.append(matches[i])
+                  print 'appended coordinates'
 
       matches1 = re.findall("[1-5][A-Ea-e]", userInput)
       if len(matches1) > 0:
@@ -25,11 +26,13 @@ while loop == 3:
                   reverse += matches1[i][0]
                   matches1[i] = reverse
                   coordinates.append(matches1[i])
+                  print 'appended coordinates'
 
       matches2 = re.findall("[1-5]\,[1-5]", userInput)
       if len(matches2) > 0:
             for i in xrange(len(matches2)):
                   coordinates.append(matches2[i])
+                  print 'appended coordinates'
 
       matches3 = re.findall("(?:\W|^)([1-5])\s([1-5])(?:\W|$)", userInput)
       if len(matches3) > 0:
@@ -38,6 +41,7 @@ while loop == 3:
                   col = matches3[i][1]
                   matches3[i] = row + "," + col
                   coordinates.append(matches3[i])
+                  print 'appended coordinates'
 
       split = userInput.lower().split()
       for i in xrange(len(split)):
@@ -56,6 +60,6 @@ while loop == 3:
                   coord = row + "," + col
                   i = i+3
                   coordinates.append(coord)
+                  print 'appended coordinates'
 
       print coordinates
-

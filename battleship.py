@@ -22,6 +22,7 @@ class State():
 
 
     def placeShip(self, coordinates, player):
+        print coordinates
         if player == 1:
             for coordinate in coordinates:
                 self.cpuBoard[coordinate[0]][coordinate[1]] = "S"
@@ -33,6 +34,7 @@ class State():
 
 
     def fire(self, coordinate, player, cpu):
+        print coordinate
         row = coordinate[0]-1
         col = coordinate[1]-1
         if player == 1:
@@ -92,6 +94,7 @@ class CPU():
         else:
             guess = self.firstGuess(board)
         self.history.add(guess)
+        guess = (guess[0]+1, guess[1]+1)
         return guess
 
     def firstGuess(self, board):
@@ -148,6 +151,7 @@ class CPU():
     def placeShips(self, state):
         board = state.cpuBoard
         shipPlacements = set([])
+        state.cpuShips = set([])
         for i in range(0, state.totalShips):
             restartNeeded = False
             shipProw = (self.random_row(state.cpuBoard), self.random_col(state.cpuBoard))
@@ -169,13 +173,17 @@ class CPU():
             guessIndex = possMasts[randint(0, len(possMasts)-1)]
             shipMast = hitDict[guessIndex]
             while shipMast in shipPlacements:
+                possMasts.remove(guessIndex)
                 if len(possMasts) == 0:
                     restartNeeded = True
                     break
                 guessIndex = possMasts[randint(0, len(possMasts)-1)]
                 shipMast = hitDict[guessIndex]
-                possMasts.remove(guessIndex)
             if restartNeeded:
+                print "restart"
+                possMasts = []
+                self.placeShips(state)
+                return
                 i -= 1
                 continue
             restartNeeded = True
@@ -188,7 +196,8 @@ class CPU():
                         shipPlacements.add(shipMast)
                         state.placeShip((shipProw, shipMast, shipAft), 1)
                         restartNeeded = False
-                if min(shipProw[1], shipMast[1]) - 1 < 0:
+                        continue
+                if min(shipProw[1], shipMast[1]) - 1 >= 0:
                     shipAft = (shipProw[0], min(shipProw[1], shipMast[1]) - 1)
                     if shipAft not in shipPlacements:
                         shipPlacements.add(shipAft)
@@ -196,6 +205,7 @@ class CPU():
                         shipPlacements.add(shipMast)
                         state.placeShip((shipProw, shipMast, shipAft), 1)
                         restartNeeded = False
+                        continue
             if shipProw[1] == shipMast[1]:#should be the case
                 if max(shipProw[0], shipMast[0]) + 1 < len(board):
                     shipAft = (max(shipProw[0], shipMast[0]) + 1, shipProw[1])
@@ -205,7 +215,8 @@ class CPU():
                         shipPlacements.add(shipMast)
                         state.placeShip((shipProw, shipMast, shipAft), 1)
                         restartNeeded = False
-                if min(shipProw[0], shipMast[0]) - 1 < 0:
+                        continue
+                if min(shipProw[0], shipMast[0]) - 1 >= 0:
                     shipAft = (min(shipProw[0], shipMast[0]) - 1, shipProw[1])
                     if shipAft not in shipPlacements:
                         shipPlacements.add(shipAft)
@@ -213,9 +224,17 @@ class CPU():
                         shipPlacements.add(shipMast)
                         state.placeShip((shipProw, shipMast, shipAft), 1)
                         restartNeeded = False
+                        continue
             if restartNeeded:
+                # possMasts = []
+                print "restart"
+                self.placeShips(state)
+                return
                 i -= 1
                 continue
+        print "**************"
+        print state.cpuShips
+        print "**************"
 
     def random_row(self, board):
         return randint(0, len(board) - 1)
@@ -233,11 +252,12 @@ print "Let's play Battleship!"
 state = State()
 cpu = CPU()
 cpu.placeShips(state)
+print state.cpuShips
 
 for i in range(0, state.totalShips):
     inputList = raw_input("Where do you want your first ship to be?").split()
     state.placeShip([(int(inputList[0]), int(inputList[1])), (int(inputList[2]), int(inputList[3])), (int(inputList[4]), int(inputList[5]))], 0)
-
+    print state.playerShips
 #defining where the ship is
 
 

@@ -275,7 +275,7 @@ while True:
             break
     else:
         print "Miss..."
-    cpuhit = state.fire(cpu.guess(state.playerBoard), 0, cpu)
+    cpuhit = state.fire(cpu.guess(state.playerBoard), 1, cpu)
     if cpuhit:
         print "Hit! from the CPU"
         if state.checkWin():

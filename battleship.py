@@ -24,6 +24,11 @@ class State():
             board.append(["O"] * 5)
         return board
 
+    def guessed(self, coordinate):#zero index
+        coordinate = (coordinate[0]-1, coordinate[1]-1)
+        return coordinate in self.targeted
+
+
     def placeShip(self, coordinates, player):
         print coordinates
         if player == 1:
@@ -50,7 +55,7 @@ class State():
                     cpu.firstHit = None
                     cpu.secondHit = None
                 self.history.append((1, coordinate, "H"))
-                self.playerShips.remove(coordinate)
+                self.playerShips.remove((row, col))
                 return True
             else:
                 self.history.append((1, coordinate, "M"))
@@ -62,7 +67,7 @@ class State():
                 self.history.append((0, coordinate, "H"))
                 self.hit.add(coordinate)
                 print self.cpuShips
-                self.cpuShips.remove(coordinate)
+                self.cpuShips.remove((row, col))
                 return True
             elif self.cpuBoard[row][col] == "O":
                 self.cpuBoard[row][col] = "M"
@@ -163,10 +168,10 @@ class CPU():
             possHits.append(3)
         if self.firstHit[1]+1 < len(board[0]):
             possHits.append(4)
-        guessIndex = possHits[randint(0, len(possHits-1))]
+        guessIndex = possHits[randint(0, len(possHits)-1)]
         guess = hitDict(guessIndex)
         while guess in self.history:
-            guessIndex = possHits[randint(0, len(possHits-1))]
+            guessIndex = possHits[randint(0, len(possHits)-1)]
             guess = hitDict(guessIndex)
         return guess
 

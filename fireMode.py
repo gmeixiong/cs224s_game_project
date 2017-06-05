@@ -22,7 +22,32 @@ def parseFireInput(state):
 	      #from parseCoordinates, returns 0 if parse fail and 1 if parse success, 2 if parse returns multiple coordinats. coordinates will return with the 0th element as the row and 1st element as the column
 
 	      # First Screen and Input
-	      userInput = raw_input("Please input a coordinate for attack!")
+	      firstAttackQueries = ["Please input a coordinate for attack!", "Where do you want to attack first?", "Initial target coordinates, captain?"]
+	      attackQueries = ["Please input a coordinate for attack!", "Next attack coordinates, captain?", "Where do you want to attack next?", "Where should we fire next?"]
+	      losingStarts = ["We're not out of this yet, Captain!", "It ain't over 'til it's over!", "Time for a comeback!"]
+	      winningStarts = ["We've got them on the ropes!", "Victory is on the horizon, Captain!", "We've got them right where we want them."]
+	      hitStarts = ["Let's get 'em again, Captain", "Once more, with feeling!", "Another!"]
+	      missStarts = ["This time, for sure!", "Give it another go, Captain!", "A little more thataways, Captain!"]
+	      twiceHitStarts = ["For Fire!!"]
+	      twiceMissStarts = ["Third times the charm!"]
+	      if state.prevResult == None:
+	      	userInput = raw_input(random.choice(random.choice(firstAttackQueries)))
+	      else:
+	      	query = random.choice(attackQueries)
+	      	roll = random.randint(1, 10)
+	      	if len(state.playerShips) <= 3 and roll >= 3:
+	      		query = random.choice(losingStarts) + " " + query
+	      	elif len(state.cpuShips) <= 3 and roll >= 3:
+	      		query = random.choice(winningStarts) + " " + query
+	      	elif state.doubleMiss and roll >= 5:
+	      		query = random.choice(twiceMissStarts) + " " + query
+	      	elif state.doubleHit and roll >= 5:
+	      		query = random.choice(twiceHitStarts) + " " + query
+	      	elif state.prevResult == "hit" and roll >= 2:
+	      		query = random.choice(hitStarts) + " " + query
+	      	elif state.prevResult == "miss" and roll >= 2:
+	      		query = random.choice(missStarts) + " " + query
+	      	userInput = raw_input(query)
 	      userInput = userInput.lower()
 
 	      coordinates = []

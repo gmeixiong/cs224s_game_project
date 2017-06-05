@@ -37,8 +37,10 @@ def parseFireInput(state):
 	      haveShipResponses = ["Yep, we've got one there.", "Yessir, got one of our best guys out there!"]
 	      haveNotShipsResponses = ["Nope! You don't have a ship here", "That's a negative Ghost Rider"]
 
+
+
 	      if state.prevResult == None:
-	      	userInput = raw_input(random.choice(random.choice(firstAttackQueries)))
+	      	userInput = raw_input(random.choice(firstAttackQueries))
 	      else:
 	      	query = random.choice(attackQueries)
 	      	roll = random.randint(1, 10)

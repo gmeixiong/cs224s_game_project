@@ -15,6 +15,8 @@ class State():
         self.targeted = set([])
         self.hit = set([])
         self.prevResult = None
+        self.doubleHit = False
+        self.doubleMiss = False
 
     def initializeBoard(self):
         board = []

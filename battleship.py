@@ -19,6 +19,14 @@ class State():
         for x in range(5):
             board.append(["O"] * 5)
         return board
+        
+    def aligned(coordinates):
+        if coordinates[0] == coordinates[1] or coordinates[0] == coordinates[2] or coordinates[1] == coordinates[2]:
+            return False
+        if coordinates[0][0] == coordinates[1][0] and coordinates[1][0] == coordinates[2][0]:
+            return True
+        if coordinates[0][1] == coordinates[1][1] and coordinates[1][1] == coordinates[2][1]:
+            return True
 
 
     def placeShip(self, coordinates, player):

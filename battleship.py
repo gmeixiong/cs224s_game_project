@@ -28,7 +28,7 @@ class State():
                 self.cpuBoard[coordinate[0]][coordinate[1]] = "S"
                 self.cpuShips.add(coordinate)
         elif player == 0:
-            for coordinate in coordinates:
+            # for coordinate in coordinates:
                 self.playerBoard[coordinate[0]][coordinate[1]] = "S"
                 self.playerShips.add(coordinate)
 

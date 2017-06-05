@@ -13,6 +13,7 @@ class State():
         self.history = []#player, (row, col), hit/miss
         self.targeted = set([])
         self.hit = set([])
+        self.prevResult = None
 
     def initializeBoard(self):
         board = []
@@ -36,7 +37,7 @@ class State():
                 self.cpuBoard[coordinate[0]][coordinate[1]] = "S"
                 self.cpuShips.add(coordinate)
         elif player == 0:
-            for coordinate in coordinates:
+            # for coordinate in coordinates:
                 self.playerBoard[coordinate[0]][coordinate[1]] = "S"
                 self.playerShips.add(coordinate)
 
@@ -85,6 +86,46 @@ class State():
         if len(state.cpuShips) == 0:
             print "Player Won!"
             return True
+        return False
+
+    def aligned(coordinates):
+        if coordinates[0] == coordinates[1] or coordinates[0] == coordinates[2] or coordinates[1] == coordinates[2]:
+            return False
+        if coordinates[0][0] == coordinates[1][0] and coordinates[1][0] == coordinates[2][0]:
+            if coordinates[0][1]-coordinates[1][1] == 2:
+                if coordinates[1][1]+1 == coordinates[2][1]:
+                    return True
+            elif coordinates[0][1]-coordinates[1][1] == -2:
+                if coordinates[0][1]+1 = coordinates[2][1]:
+                    return True
+            if coordinates[0][1]-coordinates[1][1] == 1:
+                if coordinates[0][1]+1 == coordinates[2][1]:
+                    return True
+            elif coordinates[0][1]-coordinates[1][1] == -1:
+                if coordinates[1][1]+1 = coordinates[2][1]:
+                    return True
+            return False
+        if coordinates[0][1] == coordinates[1][1] and coordinates[1][1] == coordinates[2][1]:
+            if coordinates[0][0]-coordinates[1][0] == 2:
+                if coordinates[1][0]+1 == coordinates[2][0]:
+                    return True
+            elif coordinates[0][0]-coordinates[1][0] == -2:
+                if coordinates[0][0]+1 = coordinates[2][0]:
+                    return True
+            if coordinates[0][0]-coordinates[1][0] == 1:
+                if coordinates[0][0]+1 == coordinates[2][0]:
+                    return True
+            elif coordinates[0][0]-coordinates[1][0] == -1:
+                if coordinates[1][0]+1 = coordinates[2][0]:
+                    return True
+            return False
+
+    def checkValid(coordinate):
+        if coordinate[0] >= 1:
+            if coordinate[0] <= len(self.board):
+                if coordinate[1] >= 1:
+                    if coordinate[1] <= len(self.board[0]):
+                        return True
         return False
 
 
@@ -278,11 +319,19 @@ while True:
     hit = parseFireInput(state)
     if hit:
         print "Hit!"
+        if state.prevResult == "hit":
+            state.doubleHit == True
+        state.prevResult == "hit"
+        state.doubleMiss == False
         if state.checkWin():
             print "Game Over"
             break
     else:
         print "Miss..."
+        if state.prevResult == "miss":
+            state.doubleMiss == True
+        state.prevResult == "miss"
+        state.doubleHit == False
     cpuhit = state.fire(cpu.guess(state.playerBoard), 1, cpu)
     if cpuhit:
         print "Hit! from the CPU"

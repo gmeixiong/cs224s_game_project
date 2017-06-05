@@ -22,10 +22,41 @@ def parseFireInput(state):
 	      #from parseCoordinates, returns 0 if parse fail and 1 if parse success, 2 if parse returns multiple coordinats. coordinates will return with the 0th element as the row and 1st element as the column
 
 	      # First Screen and Input
-	      userInput = raw_input("Please input a coordinate for attack!")
+	      firstAttackQueries = ["Please input a coordinate for attack!", "Where do you want to attack first?", "Initial target coordinates, captain?"]
+	      attackQueries = ["Please input a coordinate for attack!", "Next attack coordinates, captain?", "Where do you want to attack next?", "Where should we fire next?"]
+	      losingStarts = ["We're not out of this yet, Captain!", "It ain't over 'til it's over!", "Time for a comeback!"]
+	      winningStarts = ["We've got them on the ropes!", "Victory is on the horizon, Captain!", "We've got them right where we want them."]
+	      hitStarts = ["Let's get 'em again, Captain", "Once more, with feeling!", "Another!"]
+	      missStarts = ["This time, for sure!", "Give it another go, Captain!", "A little more thataways, Captain!"]
+	      twiceHitStarts = ["For Fire!!"]
+	      twiceMissStarts = ["Third times the charm!"]
+
+	      #Location Status
+	      haveFiredResponses = ["Yes! You've already fired at this location!", "Affirmative, Captain", "Aye, Captain, we've shot there."]
+	      haveNotFiredResponses = ["Nope! You haven't fired here yet!", "Not yet Captain", "Nope, haven't pointed the cannon there, sir!"]
+	      haveShipResponses = ["Yep, we've got one there.", "Yessir, got one of our best guys out there!"]
+	      haveNotShipsResponses = ["Nope! You don't have a ship here", "That's a negative Ghost Rider"]
+
+	      if state.prevResult == None:
+	      	userInput = raw_input(random.choice(random.choice(firstAttackQueries)))
+	      else:
+	      	query = random.choice(attackQueries)
+	      	roll = random.randint(1, 10)
+	      	if len(state.playerShips) <= 3 and roll >= 3:
+	      		query = random.choice(losingStarts) + " " + query
+	      	elif len(state.cpuShips) <= 3 and roll >= 3:
+	      		query = random.choice(winningStarts) + " " + query
+	      	elif state.doubleMiss and roll >= 5:
+	      		query = random.choice(twiceMissStarts) + " " + query
+	      	elif state.doubleHit and roll >= 5:
+	      		query = random.choice(twiceHitStarts) + " " + query
+	      	elif state.prevResult == "hit" and roll >= 2:
+	      		query = random.choice(hitStarts) + " " + query
+	      	elif state.prevResult == "miss" and roll >= 2:
+	      		query = random.choice(missStarts) + " " + query
+	      	userInput = raw_input(query)
 	      userInput = userInput.lower()
 
-	      coordinates = []
 
 	      coordinates = get_coord(userInput) # parse coordinates will fill the coordinates list with the list of parsed coordinates. Returns 1 if 1 successful coordinate. returns 2 if more than one coordinate. Returns 0 otherwise.
 	      status = len(coordinates)
@@ -36,15 +67,16 @@ def parseFireInput(state):
 	      	if len(re.findall("(?:.*)(have)(?:.*)", userInput)) > 0:
 	      		if len(re.findall("(?:.*)(fire|target|shot|done)(?:.*)", userInput)) > 0:
 	      			if coordinates[0] in state.targeted:
-	      				print("Yes! You've already fired at this location!")
+	      				print(random.choice(haveFiredResponses))
 	      			else:
-	      				print("Nope! You haven't fired here yet!")
+	      				print(random.choice(haveNotFiredResponses))
 	      				referencedCoordinate = coordinates[0]
+	      		####################Should be option to fire at this target here #####################
 	      		elif len(re.findall("(?:.*)(ship|boat)(?:.*)", userInput)) > 0:
 	      			if coordinates[0] in state.playerShips:
-	      				print("Yes! You have a ship at this location.")
+	      				print(random.choice(haveShipResponses))
 	      			else:
-	      				print("Nope! You don't have a ship here")
+	      				print(random.choice(haveNotShipsResponses))
 	      		else:
 	      			print("I'm not sure what you mean! Please try again")
 	      	else:

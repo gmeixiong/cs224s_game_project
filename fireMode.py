@@ -37,8 +37,13 @@ def parseFireInput(state):
 	      haveShipResponses = ["Yep, we've got one there.", "Yessir, got one of our best guys out there!"]
 	      haveNotShipsResponses = ["Nope! You don't have a ship here", "That's a negative Ghost Rider"]
 
+	      #Already Seen
+	      seenResponses = ["You've already fired here, Captain. Choose somewhere else.", "Can only do that once, Captain. Try again.", "Lightning doesn't strike in the same place twice, Captain. Try something else."]
+
+
+
 	      if state.prevResult == None:
-	      	userInput = raw_input(random.choice(random.choice(firstAttackQueries)))
+	      	userInput = raw_input(random.choice(firstAttackQueries))
 	      else:
 	      	query = random.choice(attackQueries)
 	      	roll = random.randint(1, 10)
@@ -85,6 +90,10 @@ def parseFireInput(state):
 	      			coordinates.append(referencedCoordinate)
 	      		#state.targeted.append(coordinates[0]) ##
 	      		## APPEND THIS COORDINATE TO TARGETEDPOInts LIST
+	      		if state.guessed(coordinates[0]):#already guessed
+	      			print random.choice(seenResponses)
+	      			parseFireInput(state)#just start the whole process over
+	      			return
 		      	return coordinates[0]
 
 	      elif status == 2: #coordinates has more than 1

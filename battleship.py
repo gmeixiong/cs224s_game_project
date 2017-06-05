@@ -1,5 +1,6 @@
 from random import randint
 from fireMode import *
+from placeShips import *
 # from coord.py import *
 #initializing board
 
@@ -20,15 +21,6 @@ class State():
         for x in range(5):
             board.append(["O"] * 5)
         return board
-        
-    def aligned(coordinates):
-        if coordinates[0] == coordinates[1] or coordinates[0] == coordinates[2] or coordinates[1] == coordinates[2]:
-            return False
-        if coordinates[0][0] == coordinates[1][0] and coordinates[1][0] == coordinates[2][0]:
-            return True
-        if coordinates[0][1] == coordinates[1][1] and coordinates[1][1] == coordinates[2][1]:
-            return True
-
 
     def placeShip(self, coordinates, player):
         print coordinates
@@ -37,13 +29,12 @@ class State():
                 self.cpuBoard[coordinate[0]][coordinate[1]] = "S"
                 self.cpuShips.add(coordinate)
         elif player == 0:
-            # for coordinate in coordinates:
+            for coordinate in coordinates:
                 self.playerBoard[coordinate[0]][coordinate[1]] = "S"
                 self.playerShips.add(coordinate)
 
 
     def fire(self, coordinate, player, cpu):
-        print coordinate
         row = coordinate[0]-1
         col = coordinate[1]-1
         if player == 1:
@@ -88,7 +79,7 @@ class State():
             return True
         return False
 
-    def aligned(coordinates):
+    def aligned(self, coordinates):
         if coordinates[0] == coordinates[1] or coordinates[0] == coordinates[2] or coordinates[1] == coordinates[2]:
             return False
         if coordinates[0][0] == coordinates[1][0] and coordinates[1][0] == coordinates[2][0]:
@@ -96,13 +87,13 @@ class State():
                 if coordinates[1][1]+1 == coordinates[2][1]:
                     return True
             elif coordinates[0][1]-coordinates[1][1] == -2:
-                if coordinates[0][1]+1 = coordinates[2][1]:
+                if coordinates[0][1]+1 == coordinates[2][1]:
                     return True
             if coordinates[0][1]-coordinates[1][1] == 1:
                 if coordinates[0][1]+1 == coordinates[2][1]:
                     return True
             elif coordinates[0][1]-coordinates[1][1] == -1:
-                if coordinates[1][1]+1 = coordinates[2][1]:
+                if coordinates[1][1]+1 == coordinates[2][1]:
                     return True
             return False
         if coordinates[0][1] == coordinates[1][1] and coordinates[1][1] == coordinates[2][1]:
@@ -110,17 +101,17 @@ class State():
                 if coordinates[1][0]+1 == coordinates[2][0]:
                     return True
             elif coordinates[0][0]-coordinates[1][0] == -2:
-                if coordinates[0][0]+1 = coordinates[2][0]:
+                if coordinates[0][0]+1 == coordinates[2][0]:
                     return True
             if coordinates[0][0]-coordinates[1][0] == 1:
                 if coordinates[0][0]+1 == coordinates[2][0]:
                     return True
             elif coordinates[0][0]-coordinates[1][0] == -1:
-                if coordinates[1][0]+1 = coordinates[2][0]:
+                if coordinates[1][0]+1 == coordinates[2][0]:
                     return True
             return False
 
-    def checkValid(coordinate):
+    def checkValid(self, coordinate):
         if coordinate[0] >= 1:
             if coordinate[0] <= len(self.board):
                 if coordinate[1] >= 1:
@@ -280,10 +271,6 @@ class CPU():
                 self.placeShips(state)
                 return
                 i -= 1
-                continue
-        print "**************"
-        print state.cpuShips
-        print "**************"
 
     def random_row(self, board):
         return randint(0, len(board) - 1)
@@ -304,8 +291,16 @@ cpu.placeShips(state)
 print state.cpuShips
 
 for i in range(0, state.totalShips):
-    inputList = raw_input("Where do you want your first ship to be?").split()
-    state.placeShip([(int(inputList[0]), int(inputList[1])), (int(inputList[2]), int(inputList[3])), (int(inputList[4]), int(inputList[5]))], 0)
+    # inputList = raw_input("Where do you want your first ship to be?").split()
+    # state.placeShip([(int(inputList[0]), int(inputList[1])), (int(inputList[2]), int(inputList[3])), (int(inputList[4]), int(inputList[5]))], 0)
+    coordinates = parseShipPlacement(state)
+    for i in range(0, len(coordinates)):
+        coordinate = coordinates[i]
+        coordinates[i] = (coordinate[0]-1, coordinate[1]-1)
+        print coordinate
+    coordinates = (coordinates[0], coordinates[1], coordinates[2])
+    state.placeShip(coordinates, 0)
+    print coordinates
     print state.playerShips
 #defining where the ship is
 

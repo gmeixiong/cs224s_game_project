@@ -163,6 +163,6 @@ def parseShipPlacement(state):
 
 		# print coord
 
-state = 0
-c= parseShipPlacement(state)
-print c
+# state = 0
+# c= parseShipPlacement(state)
+# print c

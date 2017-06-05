@@ -84,10 +84,41 @@ class State():
         if coordinates[0] == coordinates[1] or coordinates[0] == coordinates[2] or coordinates[1] == coordinates[2]:
             return False
         if coordinates[0][0] == coordinates[1][0] and coordinates[1][0] == coordinates[2][0]:
-            return True
+            if coordinates[0][1]-coordinates[1][1] == 2:
+                if coordinates[1][1]+1 == coordinates[2][1]:
+                    return True
+            elif coordinates[0][1]-coordinates[1][1] == -2:
+                if coordinates[0][1]+1 = coordinates[2][1]:
+                    return True
+            if coordinates[0][1]-coordinates[1][1] == 1:
+                if coordinates[0][1]+1 == coordinates[2][1]:
+                    return True
+            elif coordinates[0][1]-coordinates[1][1] == -1:
+                if coordinates[1][1]+1 = coordinates[2][1]:
+                    return True
+            return False
         if coordinates[0][1] == coordinates[1][1] and coordinates[1][1] == coordinates[2][1]:
-            return True
+            if coordinates[0][0]-coordinates[1][0] == 2:
+                if coordinates[1][0]+1 == coordinates[2][0]:
+                    return True
+            elif coordinates[0][0]-coordinates[1][0] == -2:
+                if coordinates[0][0]+1 = coordinates[2][0]:
+                    return True
+            if coordinates[0][0]-coordinates[1][0] == 1:
+                if coordinates[0][0]+1 == coordinates[2][0]:
+                    return True
+            elif coordinates[0][0]-coordinates[1][0] == -1:
+                if coordinates[1][0]+1 = coordinates[2][0]:
+                    return True
+            return False
 
+    def checkValid(coordinate):
+        if coordinate[0] >= 1:
+            if coordinate[0] <= len(self.board):
+                if coordinate[1] >= 1:
+                    if coordinate[1] <= len(self.board[0]):
+                        return True
+        return False
 
 
 class CPU():

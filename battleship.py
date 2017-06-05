@@ -88,7 +88,7 @@ class State():
             return True
         return False
 
-    def aligned(coordinates):
+    def aligned(self, coordinates):
         if coordinates[0] == coordinates[1] or coordinates[0] == coordinates[2] or coordinates[1] == coordinates[2]:
             return False
         if coordinates[0][0] == coordinates[1][0] and coordinates[1][0] == coordinates[2][0]:
@@ -120,7 +120,7 @@ class State():
                     return True
             return False
 
-    def checkValid(coordinate):
+    def checkValid(self, coordinate):
         if coordinate[0] >= 1:
             if coordinate[0] <= len(self.board):
                 if coordinate[1] >= 1:

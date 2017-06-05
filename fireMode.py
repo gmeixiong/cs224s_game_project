@@ -30,6 +30,13 @@ def parseFireInput(state):
 	      missStarts = ["This time, for sure!", "Give it another go, Captain!", "A little more thataways, Captain!"]
 	      twiceHitStarts = ["For Fire!!"]
 	      twiceMissStarts = ["Third times the charm!"]
+
+	      #Location Status
+	      haveFiredResponses = ["Yes! You've already fired at this location!", "Affirmative, Captain", "Aye, Captain, we've shot there."]
+	      haveNotFiredResponses = ["Nope! You haven't fired here yet!", "Not yet Captain", "Nope, haven't pointed the cannon there, sir!"]
+	      haveShipResponses = ["Yep, we've got one there.", "Yessir, got one of our best guys out there!"]
+	      haveNotShipsResponses = ["Nope! You don't have a ship here", "That's a negative Ghost Rider"]
+
 	      if state.prevResult == None:
 	      	userInput = raw_input(random.choice(random.choice(firstAttackQueries)))
 	      else:
@@ -50,7 +57,6 @@ def parseFireInput(state):
 	      	userInput = raw_input(query)
 	      userInput = userInput.lower()
 
-	      coordinates = []
 
 	      coordinates = get_coord(userInput) # parse coordinates will fill the coordinates list with the list of parsed coordinates. Returns 1 if 1 successful coordinate. returns 2 if more than one coordinate. Returns 0 otherwise.
 	      status = len(coordinates)
@@ -61,15 +67,16 @@ def parseFireInput(state):
 	      	if len(re.findall("(?:.*)(have)(?:.*)", userInput)) > 0:
 	      		if len(re.findall("(?:.*)(fire|target|shot|done)(?:.*)", userInput)) > 0:
 	      			if coordinates[0] in state.targeted:
-	      				print("Yes! You've already fired at this location!")
+	      				print(random.choice(haveFiredResponses))
 	      			else:
-	      				print("Nope! You haven't fired here yet!")
+	      				print(random.choice(haveNotFiredResponses))
 	      				referencedCoordinate = coordinates[0]
+	      		####################Should be option to fire at this target here #####################
 	      		elif len(re.findall("(?:.*)(ship|boat)(?:.*)", userInput)) > 0:
 	      			if coordinates[0] in state.playerShips:
-	      				print("Yes! You have a ship at this location.")
+	      				print(random.choice(haveShipResponses))
 	      			else:
-	      				print("Nope! You don't have a ship here")
+	      				print(random.choice(haveNotShipsResponses))
 	      		else:
 	      			print("I'm not sure what you mean! Please try again")
 	      	else:

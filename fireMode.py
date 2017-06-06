@@ -71,14 +71,16 @@ def parseFireInput(state):
 	      	#coordinates were parsed. firing at input target. add target to list. return whether target was hit or miss.
 	      	if len(re.findall("(?:.*)(have|did)(?:.*)", userInput)) > 0:
 	      		if len(re.findall("(?:.*)(fire|target|shot|done|attack)(?:.*)", userInput)) > 0:
-	      			if coordinates[0] in state.targeted:
+	      			coordinate = (coordinates[0][0], coordinates[0][1])
+	      			if coordinate in state.targeted:
 	      				print(random.choice(haveFiredResponses))
 	      			else:
 	      				print(random.choice(haveNotFiredResponses))
 	      				referencedCoordinate = coordinates[0]
 	      		####################Should be option to fire at this target here #####################
 	      		elif len(re.findall("(?:.*)(ship|boat)(?:.*)", userInput)) > 0:
-	      			if coordinates[0] in state.playerShips:
+	      			coordinate = (coordinates[0][0], coordinates[0][1])
+	      			if coordinate in state.playerShips:
 	      				print(random.choice(haveShipResponses))
 	      			else:
 	      				print(random.choice(haveNotShipsResponses))

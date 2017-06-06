@@ -30,7 +30,6 @@ class State():
 
 
     def placeShip(self, coordinates, player):
-        print coordinates
         if player == 1:
             for coordinate in coordinates:
                 self.cpuBoard[coordinate[0]][coordinate[1]] = "S"
@@ -278,7 +277,6 @@ print "Let's play Battleship!"
 state = State()
 cpu = CPU()
 cpu.placeShips(state)
-print state.cpuShips
 
 for i in range(0, state.totalShips):
     # inputList = raw_input("Where do you want your first ship to be?").split()

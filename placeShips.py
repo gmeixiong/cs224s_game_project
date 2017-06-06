@@ -191,8 +191,8 @@ def parseShipPlacement(state):
 		elif len(coord) == 3:
 			if len(coordinates) != 0:
 				resp = "Sorry, you're providing too many coordinates. So far, your ship covers"
-					for c in coordinates:
-						resp = resp + " " + coordStr(c)
+				for c in coordinates:
+					resp = resp + " " + coordStr(c)
 				userInput = raw_input(resp + ". Which other coordinates do you want this ship to cover? ")
 			else:
 				if aligned(coord):

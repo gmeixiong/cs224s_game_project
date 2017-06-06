@@ -69,7 +69,7 @@ def parseFireInput(state):
 	    	status = 2
 	    if status == 1 or referencedCoordinate is not None and len(re.findall("(?:.*)(fire|shoot|attack|go)(?:.*)", userInput)) > 0:
 	      	#coordinates were parsed. firing at input target. add target to list. return whether target was hit or miss.
-	      	if len(re.findall("(?:.*)(have)(?:.*)", userInput)) > 0:
+	      	if len(re.findall("(?:.*)(have|did)(?:.*)", userInput)) > 0:
 	      		if len(re.findall("(?:.*)(fire|target|shot|done|attack)(?:.*)", userInput)) > 0:
 	      			if coordinates[0] in state.targeted:
 	      				print(random.choice(haveFiredResponses))
@@ -97,8 +97,8 @@ def parseFireInput(state):
 		      	return coordinates[0]
 
 	    elif status == 2: #coordinates has more than 1
-	      	if len(re.findall("(?:.*)(have|previous|last|past)(?:.*)", userInput)) > 0:
-	      		if len(re.findall("(?:.*)(fire|target|shot|done|gone|attack)(?:.*)", userInput)) > 0:
+	      	if len(re.findall("(?:.*)(have|previous|last|past|did)(?:.*)", userInput)) > 0:
+	      		if len(re.findall("(?:.*)(fire|target|shot|done|gone|attack|shoot)(?:.*)", userInput)) > 0:
 	      			if len(state.targeted) > 0:
 		      			print("You have already targeted the following coordinates: ")
 		      			for i in range(len(state.targeted)):
@@ -113,13 +113,13 @@ def parseFireInput(state):
 	  			response = multipleTargetsResponses[random.randint(0, len(multipleTargetsResponses)) - 1]
 	      		print response
 
-	    elif len(re.findall("(?:.*)(have|previous|last|past)(?:.*)", userInput)) > 0:
+	    elif len(re.findall("(?:.*)(have|previous|last|past|did)(?:.*)", userInput)) > 0:
 	      	if len(re.findall("(?:.*)(hit)(?:.*)", userInput)) > 0:
 		      	print("You have sunk ships at the following coordinates: ")
 		      	for i in range(len(state.hit)):
 		      		print("Row: %d, Column: %d\n") % (state.hit[i][0], state.hit[i][1])
 
-      		if len(re.findall("(?:.*)(fire|target|shot|done|gone|attack)(?:.*)", userInput)) > 0:
+      		if len(re.findall("(?:.*)(fire|target|shot|done|gone|attack|shoot)(?:.*)", userInput)) > 0:
       			if len(state.targeted) > 0:
 	      			print("You have already targeted the following coordinates: ")
 	      			for i in range(len(state.targeted)):

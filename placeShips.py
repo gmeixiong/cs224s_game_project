@@ -131,7 +131,7 @@ def parseShipPlacement(state):
 				if len(poss_coords) == 0:
 					userInput = raw_input("Sorry, that coordinate doesn't align with your first coordinate " + coordStr(co) + " . Please tell me two more coordinates that align with this coordinate")
 				else:
-					coordinates.append(co)
+					# coordinates.append(co)
 					if len(poss_coords) == 1:
 						# if not state.checkFree(poss_coords[0]):
 							# userInput = raw_input("Sorry, this ship would overlap with another ship. Let's try again. Where would you like to place your ship?")
@@ -156,6 +156,7 @@ def parseShipPlacement(state):
 							for c in coordinates:
 								resp = resp + " " + coordStr(c)
 							print resp
+							print str(coordinates)
 
 					else:
 						userInput = raw_input("Great, so for your last coordinate, do you want to make it "+ coordStr(poss_coords[0]) + " or " + coordStr(poss_coords[1]) + 
@@ -231,7 +232,7 @@ def parseShipPlacement(state):
 							userInput = raw_input("Sorry, I didn't get that. For your last coordinate, do you want to make it "+ str(poss_coords[0]) + " or " + str(poss_coords[1]) + 
 						"?")  
 							last_coord = which_coord(poss_coords[0], poss_coords[1], userInput.lower())
-						print "Great! I'll make your last coordinate " + coordStr(last_coord) + ". I'll go ahead and place your ship now!"
+						print "Great! I'll make your last coordinate " + coordStr(last_coord) + ". I'll see if I can place your ship now!"
 						coordinates.append(last_coord)
 						##ADD AFFIRMING AND GETTING LAST COORDINATE, AFTER FINDING MISSING COORDINATE
 

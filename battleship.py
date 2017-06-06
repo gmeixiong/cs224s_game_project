@@ -315,7 +315,7 @@ for i in range(0, state.totalShips):
         # print 'OK' + str(validShipPlacement)
 
 
-    print "Great, I'll place your ship now!"
+    print "Success! I'll place your ship now, mate"
     for i in range(0, len(coordinates)):
         coordinate = coordinates[i]
         coordinates[i] = (coordinate[0]-1, coordinate[1]-1)

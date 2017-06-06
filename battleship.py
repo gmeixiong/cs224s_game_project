@@ -117,7 +117,6 @@ class State():
         return False
 
 
-
 class CPU():
     def __init__(self):
         self.history = set([])

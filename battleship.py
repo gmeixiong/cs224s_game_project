@@ -292,7 +292,9 @@ def getOverlap(state, coordinates):
 localtime = time.localtime(time.time())
 timeOfDay = 14
 
-if timeOfDay < 12:
+if timeOfDay < 6:
+    print "Why are you up at this hour playing Battleship? Whatever,"
+elif 6 <= timeOfDay < 12:
     print "Good Morning!"
 elif 12 < timeOfDay < 18:
     print "Good Afternoon!"

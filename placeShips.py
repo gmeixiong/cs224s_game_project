@@ -131,6 +131,17 @@ def parseShipPlacement(state):
 	while len(coordinates) < 3:
 		userInput = userInput.lower()
 		coord = get_coord(userInput)
+		if len(re.findall("(?:.*)(have|did)(?:.*)", userInput)) > 0:
+      		if len(re.findall("(?:.*)(ship|boat)(?:.*)", userInput)) > 0:
+      			if len(coordinates) == 0:
+      				print("You have not placed any ships yet!")
+      			else: 				
+	      			print("You have placed ships at the following coordinates: ")
+	      			for coordinate in coordinates:
+						print("Row: %d, Column: %d\n") % (coordinate[0], coordinate[1])
+      		else:
+      			print("I'm not sure what you mean! Please try again")
+
 		if len(coord) == 0:
 			userInput = raw_input(random.choice(noCoordinateResponses) +  " " + random.choice(askForShipQueries))
 

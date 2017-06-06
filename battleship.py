@@ -107,7 +107,15 @@ class State():
         return False
 
     def checkFree(self, coordinate):#only use for placements
-        return not self.playerBoard == "S"
+        return not self.playerBoard[coordinate[0]-1][coordinate[1]-1] == "S"
+
+    def neighborsFree(self, coordinate):#checks plus wise to see if there are any open and valid spots
+        coordinates = [(row+1, col), (row-1, col), (row, col+1), (row, col-1)]
+        for coord in coordinates:
+            if self.checkValid(coord) and self.checkFree(coord):
+                return True
+        return False
+
 
 
 class CPU():

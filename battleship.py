@@ -115,7 +115,7 @@ class State():
         return False
 
     def checkFree(self, coordinate):#only use for placements
-        return not self.playerBoard == "S"
+        return not self.playerBoard[coordinate[0]][coordinate[1]] == "S"
 
 
 class CPU():
@@ -279,7 +279,16 @@ class CPU():
 
 
 
+def coordStr(c):
+    rows=['0','a','b','c','d','e']
+    return rows[c[0]]+str(c[1])
 
+def getOverlap(state, coordinates):
+    overlap = []
+    for c in coordinates:
+        if not state.checkFree(c):
+            overlap.append(c)
+    return overlap
 
 #starting the game and printing the board
 print "Let's play Battleship!"
@@ -292,7 +301,26 @@ print state.cpuShips
 for i in range(0, state.totalShips):
     # inputList = raw_input("Where do you want your first ship to be?").split()
     # state.placeShip([(int(inputList[0]), int(inputList[1])), (int(inputList[2]), int(inputList[3])), (int(inputList[4]), int(inputList[5]))], 0)
-    coordinates = parseShipPlacement(state)
+    
+    print 'starting again'
+    validShipPlacement = False
+    while not validShipPlacement:
+        print str(state)
+        coordinates = parseShipPlacement(state)
+        overlap = getOverlap(state, coordinates)
+        print overlap
+        if len(overlap) == 0:
+            validShipPlacement = True
+        else:
+            resp = 'This ship placement overlaps with another ship at:'
+            for o in overlap:
+                resp = resp + " " + coordStr(o)
+            print resp + ". Please pick another ship placement"
+            coordinates = parseShipPlacement(state)
+        print 'OK' + str(validShipPlacement)
+
+
+
     for i in range(0, len(coordinates)):
         coordinate = coordinates[i]
         coordinates[i] = (coordinate[0]-1, coordinate[1]-1)

@@ -70,7 +70,7 @@ def parseFireInput(state):
 	      if status == 1 or self.referencedCoordinate is not None and len(re.findall("(?:.*)(fire|shoot)(?:.*)", userInput)) > 0:
 	      	#coordinates were parsed. firing at input target. add target to list. return whether target was hit or miss.
 	      	if len(re.findall("(?:.*)(have)(?:.*)", userInput)) > 0:
-	      		if len(re.findall("(?:.*)(fire|target|shot|done)(?:.*)", userInput)) > 0:
+	      		if len(re.findall("(?:.*)(fire|target|shot|done|attack)(?:.*)", userInput)) > 0:
 	      			if coordinates[0] in state.targeted:
 	      				print(random.choice(haveFiredResponses))
 	      			else:

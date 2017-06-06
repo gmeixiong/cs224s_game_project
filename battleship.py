@@ -1,6 +1,7 @@
 from random import randint
 from fireMode import *
 from placeShips import *
+import time
 # from coord.py import *
 #initializing board
 
@@ -288,7 +289,27 @@ def getOverlap(state, coordinates):
     return overlap
 
 #starting the game and printing the board
-print "Let's play Battleship!"
+localtime = time.localtime(time.time())
+timeOfDay = 14
+
+if timeOfDay < 12:
+    print "Good Morning!"
+elif 12 < timeOfDay < 18:
+    print "Good Afternoon!"
+else:
+    print "Good Evening!"
+
+time.sleep(0.88)
+print "I'm Aarrrrrrrrrrron the Battleship Assistant"
+time.sleep(1.5)
+print "here to help you in anyway possible!"
+time.sleep(1.5)
+print "For example, I can tell you where your ships are,"
+time.sleep(1.5)
+print "where you've fired, and what ships you've hit."
+time.sleep(1.5)
+print "That said, let's play Battleship!"
+time.sleep(1)
 
 state = State()
 cpu = CPU()

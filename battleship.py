@@ -293,7 +293,7 @@ localtime = time.localtime(time.time())
 timeOfDay = 14
 
 if timeOfDay < 6:
-    print "Why are you up at this hour playing Battleship? Whatever,"
+    print "Why are you up at this hour playing Battleship? Anyway,"
 elif 6 <= timeOfDay < 12:
     print "Good Morning!"
 elif 12 < timeOfDay < 18:

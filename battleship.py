@@ -25,7 +25,11 @@ class State():
         return board
 
     def guessed(self, coordinate):#zero index
-        coordinate = (coordinate[0]-1, coordinate[1]-1)
+        coordinate = (coordinate[0], coordinate[1])
+        if coordinate in self.targeted:
+            print "dafsfa"
+        else:
+            print self.targeted
         return coordinate in self.targeted
 
 
@@ -62,6 +66,8 @@ class State():
                 return False
         elif player == 0:
             self.targeted.add(coordinate)
+            print "******"
+            print self.targeted
             if self.cpuBoard[row][col] == "S":
                 self.cpuBoard[row][col] = "H"
                 self.history.append((0, coordinate, "H"))
@@ -120,9 +126,9 @@ class State():
 
     def checkValid(self, coordinate):
         if coordinate[0] >= 1:
-            if coordinate[0] <= len(self.board):
+            if coordinate[0] <= len(self.playerBoard):
                 if coordinate[1] >= 1:
-                    if coordinate[1] <= len(self.board[0]):
+                    if coordinate[1] <= len(self.playerBoard[0]):
                         return True
         return False
 
@@ -169,10 +175,10 @@ class CPU():
         if self.firstHit[1]+1 < len(board[0]):
             possHits.append(4)
         guessIndex = possHits[randint(0, len(possHits)-1)]
-        guess = hitDict(guessIndex)
+        guess = hitDict[guessIndex]
         while guess in self.history:
             guessIndex = possHits[randint(0, len(possHits)-1)]
-            guess = hitDict(guessIndex)
+            guess = hitDict[guessIndex]
         return guess
 
     def thirdGuess(self, board):
@@ -194,6 +200,7 @@ class CPU():
                 guess = (min(self.firstHit[0], self.secondHit[0]) - 1, self.firstHit[1])
                 if guess not in self.history:
                     return guess
+        return firstGuess(self,board)
 
     def placeShips(self, state):
         board = state.cpuBoard
@@ -318,22 +325,23 @@ while True:
     # guess_row = int(raw_input("Guess Row:"))
     # guess_col = int(raw_input("Guess Col:"))
     #hit = state.fire((guess_row, guess_col), 0, cpu)
-    hit = parseFireInput(state)
+    coordinate = parseFireInput(state)
+    hit = state.fire((coordinate[0], coordinate[1]), 0, cpu)
     if hit:
         print "Hit!"
         if state.prevResult == "hit":
-            state.doubleHit == True
-        state.prevResult == "hit"
-        state.doubleMiss == False
+            state.doubleHit = True
+        state.prevResult = "hit"
+        state.doubleMiss = False
         if state.checkWin():
             print "Game Over"
             break
     else:
         print "Miss..."
         if state.prevResult == "miss":
-            state.doubleMiss == True
-        state.prevResult == "miss"
-        state.doubleHit == False
+            state.doubleMiss = True
+        state.prevResult = "miss"
+        state.doubleHit = False
     cpuhit = state.fire(cpu.guess(state.playerBoard), 1, cpu)
     if cpuhit:
         print "Hit! from the CPU"

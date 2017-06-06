@@ -81,6 +81,12 @@ def coordStr(c):
 	rows=['0','a','b','c','d','e']
 	return rows[c[0]]+str(c[1])
 
+def getOverlap(state, coordinates):
+	overlap = []
+	for c in coordinates:
+		if not state.checkFree(c):
+			overlap.append(c)
+
 def which_coord(c1, c2, response):
 	# sc1 = str(c1)[1:-1]
 	# sc2 = str(c2)[1:-1]
@@ -109,7 +115,12 @@ def parseShipPlacement(state):
 
 		elif len(coord) == 1:
 			co = coord[0]
+			# if not state.checkFree(co):
+					# userInput = raw_input("There's already a ship at that spot. Where else would you like to place your ship?")
 			if len(coordinates) == 0:
+				# if not state.neighborsFree(co):
+					# userInput = raw_input("You wouldn't be able to place a whole ship that includes that coordinate. Where else would you like to place your ship?")
+				# else:
 				userInput = raw_input("That's a great start! Now just tell me two more coordinates to place your ship")
 				coordinates.append(co)
 
@@ -122,7 +133,12 @@ def parseShipPlacement(state):
 				else:
 					coordinates.append(co)
 					if len(poss_coords) == 1:
+						# if not state.checkFree(poss_coords[0]):
+							# userInput = raw_input("Sorry, this ship would overlap with another ship. Let's try again. Where would you like to place your ship?")
+							# continue
+						# else:
 						userInput = raw_input("Ok great! So the last coordinate will be " + coordStr(poss_coords[0]) + ", correct?")
+						
 						if 'n' in userInput.lower() or 'change' in userInput.lower():
 							userInput = raw_input("Do you want to place your ship at a different location?")
 							if 'n' in userInput.lower():
@@ -243,8 +259,8 @@ def parseShipPlacement(state):
 				for c in coordinates:
 					resp = resp + " " + coordStr(c)
 			userInput = raw_input(resp + ". Which other coordinates do you want this ship to cover? ")
-			
-	
+
+
 	return coordinates
 
 		# if 'y' in userInput.lower():

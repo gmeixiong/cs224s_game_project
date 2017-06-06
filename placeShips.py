@@ -117,6 +117,7 @@ def parseShipPlacement(state):
 		print "4) Ask which ships you've sunk i.e. \"Which ships have I sunk\""
 	elif "start over" in userInput or "startover" in userInput:
 	    print "Starting over"
+	    state.restart()
 
 
 	askForShipQueries = ["Where would you like to place your ship?", "Where do you want your ship to be?", "Captain, where should I anchor this vessel?"]
@@ -129,7 +130,7 @@ def parseShipPlacement(state):
 		userInput = userInput.lower()
 		coord = get_coord(userInput)
 		if len(coord) == 0:
-			userInput = raw_input(random.choice(noCoordinateResponses)" " + random.choice(askForShipQueries))
+			userInput = raw_input(random.choice(noCoordinateResponses) +  " " + random.choice(askForShipQueries))
 
 		elif len(coord) == 1:
 			co = coord[0]
@@ -155,7 +156,7 @@ def parseShipPlacement(state):
 							# userInput = raw_input("Sorry, this ship would overlap with another ship. Let's try again. Where would you like to place your ship?")
 							# continue
 						# else:
-						userInput = raw_input(random.choice(genericPraise) " So the last coordinate will be " + coordStr(poss_coords[0]) + ", correct?")
+						userInput = raw_input(random.choice(genericPraise) + " So the last coordinate will be " + coordStr(poss_coords[0]) + ", correct?")
 						
 						if 'n' in userInput.lower() or 'change' in userInput.lower():
 							userInput = raw_input("Do you want to place your ship at a different location?")

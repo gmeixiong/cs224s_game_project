@@ -59,7 +59,8 @@ def parseFireInput(state):
 	    	print "4) Ask which ships you've sunk i.e. \"Which ships have I sunk\""
 	    elif "start over" in userInput or "startover" in userInput:
 	    	print "Starting over"
-	    	
+	    	state.restart()
+
 
 	    coordinates = get_coord(userInput)
 	    status = len(coordinates)

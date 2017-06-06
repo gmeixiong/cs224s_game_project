@@ -92,8 +92,7 @@ def parseFireInput(state):
 	      		## APPEND THIS COORDINATE TO TARGETEDPOInts LIST
 	      		if state.guessed(coordinates[0]):#already guessed
 	      			print random.choice(seenResponses)
-	      			parseFireInput(state)#just start the whole process over
-	      			return
+	      			return parseFireInput(state)#just start the whole process over
 		      	return coordinates[0]
 
 	    elif status == 2: #coordinates has more than 1
@@ -109,7 +108,7 @@ def parseFireInput(state):
 		      	elif len(re.findall("(?:.*)(ship|boat)(?:.*)", userInput)) > 0:
 	      			print("You're ships are stationed at the following coordinates: ")
 	      			ships = list(state.playerShips)
-					for i in range(len(ships)):
+	      			for i in range(len(ships)):
 						print("Row: %d, Column: %d\n") % (ships[i][0], ships[i][1])
 						#self.coordinates is list of user's ships coordinates. each coordinate entry is a 2 element array where [0] is row and [1] is column
 	  		else:
@@ -135,7 +134,7 @@ def parseFireInput(state):
 	      	elif len(re.findall("(?:.*)(ship|boat)(?:.*)", userInput)) > 0:
       			print("You're ships are stationed at the following coordinates: ")
       			ships = list(state.playerShips)
-				for i in range(len(ships)):
+      			for i in range(len(ships)):
 					print("Row: %d, Column: %d\n") % (ships[i][0], ships[i][1])
 					#self.coordinates is list of user's ships coordinates. each coordinate entry is a 2 element array where [0] is row and [1] is column
 

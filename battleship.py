@@ -288,6 +288,74 @@ def getOverlap(state, coordinates):
             overlap.append(c)
     return overlap
 
+def playGame():
+    
+    state = State()
+    cpu = CPU()
+    cpu.placeShips(state)
+
+    for i in range(0, state.totalShips):
+        # inputList = raw_input("Where do you want your first ship to be?").split()
+        # state.placeShip([(int(inputList[0]), int(inputList[1])), (int(inputList[2]), int(inputList[3])), (int(inputList[4]), int(inputList[5]))], 0)
+        
+        # print 'starting again'
+        validShipPlacement = False
+        while not validShipPlacement:
+            coordinates = parseShipPlacement(state)
+            overlap = getOverlap(state, coordinates)
+            # print overlap
+            if len(overlap) == 0:
+                validShipPlacement = True
+            else:
+                resp = 'This ship placement overlaps with another ship at:'
+                for o in overlap:
+                    resp = resp + " " + coordStr(o)
+                print resp + ". Please pick another ship placement"
+                # coordinates = parseShipPlacement(state)
+            # print 'OK' + str(validShipPlacement)
+
+
+        print "Success! I'll place your ship now, mate"
+        for i in range(0, len(coordinates)):
+            coordinate = coordinates[i]
+            coordinates[i] = (coordinate[0]-1, coordinate[1]-1)
+        coordinates = (coordinates[0], coordinates[1], coordinates[2])
+        state.placeShip(coordinates, 0)
+    #defining where the ship is
+
+
+
+    #asking the user for a guess
+    while True:
+        # guess_row = int(raw_input("Guess Row:"))
+        # guess_col = int(raw_input("Guess Col:"))
+        #hit = state.fire((guess_row, guess_col), 0, cpu)
+        coordinate = parseFireInput(state)
+        hit = state.fire((coordinate[0], coordinate[1]), 0, cpu)
+        if hit:
+            print "Hit!"
+            if state.prevResult == "hit":
+                state.doubleHit = True
+            state.prevResult = "hit"
+            state.doubleMiss = False
+            if state.checkWin():
+                print "Game Over"
+                break
+        else:
+            print "Miss..."
+            if state.prevResult == "miss":
+                state.doubleMiss = True
+            state.prevResult = "miss"
+            state.doubleHit = False
+        cpuhit = state.fire(cpu.guess(state.playerBoard), 1, cpu)
+        if cpuhit:
+            print "Hit! from the CPU"
+            if state.checkWin():
+                print "Game Over"
+                break
+        else:
+            print "Miss... from the CPU"
+
 #starting the game and printing the board
 localtime = time.localtime(time.time())
 timeOfDay = 14
@@ -313,71 +381,9 @@ time.sleep(1.5)
 print "That said, let's play Battleship!"
 time.sleep(1)
 
-state = State()
-cpu = CPU()
-cpu.placeShips(state)
-
-for i in range(0, state.totalShips):
-    # inputList = raw_input("Where do you want your first ship to be?").split()
-    # state.placeShip([(int(inputList[0]), int(inputList[1])), (int(inputList[2]), int(inputList[3])), (int(inputList[4]), int(inputList[5]))], 0)
-    
-    # print 'starting again'
-    validShipPlacement = False
-    while not validShipPlacement:
-        coordinates = parseShipPlacement(state)
-        overlap = getOverlap(state, coordinates)
-        # print overlap
-        if len(overlap) == 0:
-            validShipPlacement = True
-        else:
-            resp = 'This ship placement overlaps with another ship at:'
-            for o in overlap:
-                resp = resp + " " + coordStr(o)
-            print resp + ". Please pick another ship placement"
-            # coordinates = parseShipPlacement(state)
-        # print 'OK' + str(validShipPlacement)
+playGame()
 
 
-    print "Success! I'll place your ship now, mate"
-    for i in range(0, len(coordinates)):
-        coordinate = coordinates[i]
-        coordinates[i] = (coordinate[0]-1, coordinate[1]-1)
-    coordinates = (coordinates[0], coordinates[1], coordinates[2])
-    state.placeShip(coordinates, 0)
-#defining where the ship is
-
-
-
-#asking the user for a guess
-while True:
-    # guess_row = int(raw_input("Guess Row:"))
-    # guess_col = int(raw_input("Guess Col:"))
-    #hit = state.fire((guess_row, guess_col), 0, cpu)
-    coordinate = parseFireInput(state)
-    hit = state.fire((coordinate[0], coordinate[1]), 0, cpu)
-    if hit:
-        print "Hit!"
-        if state.prevResult == "hit":
-            state.doubleHit = True
-        state.prevResult = "hit"
-        state.doubleMiss = False
-        if state.checkWin():
-            print "Game Over"
-            break
-    else:
-        print "Miss..."
-        if state.prevResult == "miss":
-            state.doubleMiss = True
-        state.prevResult = "miss"
-        state.doubleHit = False
-    cpuhit = state.fire(cpu.guess(state.playerBoard), 1, cpu)
-    if cpuhit:
-        print "Hit! from the CPU"
-        if state.checkWin():
-            print "Game Over"
-            break
-    else:
-        print "Miss... from the CPU"
 
 
 

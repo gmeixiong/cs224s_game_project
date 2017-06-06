@@ -105,7 +105,19 @@ def parseShipPlacement(state):
 	userInput = raw_input("Where would you like to place your ship?")
 	# responseForOne = {0: "That's a great start! Now I just need two more coordinates to place your ship", 
 	# 1: "Ok great!", 2: ""}
-	
+
+	userInput = userInput.lower()
+	helpFlag = False
+	if "help" in userInput:
+		helpFlag = True
+		print "Possible Actions:"
+		print "1) Input coordinates to place ships i.e. a4, 4a, 1,3, row 1 col 3"
+		print "2) Ask where your ships are i.e. \"Where did I placed my ships?\""
+		print "3) Ask where you've fired i.e. \"Where have I fired?\""
+		print "4) Ask which ships you've sunk i.e. \"Which ships have I sunk\""
+	elif "start over" in userInput or "startover" in userInput:
+	    print "Starting over"
+
 	coordinates = []
 	while len(coordinates) < 3:
 		userInput = userInput.lower()

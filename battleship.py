@@ -26,10 +26,6 @@ class State():
 
     def guessed(self, coordinate):#zero index
         coordinate = (coordinate[0], coordinate[1])
-        if coordinate in self.targeted:
-            print "dafsfa"
-        else:
-            print self.targeted
         return coordinate in self.targeted
 
 
@@ -66,13 +62,10 @@ class State():
                 return False
         elif player == 0:
             self.targeted.add(coordinate)
-            print "******"
-            print self.targeted
             if self.cpuBoard[row][col] == "S":
                 self.cpuBoard[row][col] = "H"
                 self.history.append((0, coordinate, "H"))
                 self.hit.add(coordinate)
-                print self.cpuShips
                 self.cpuShips.remove((row, col))
                 return True
             elif self.cpuBoard[row][col] == "O":
@@ -219,7 +212,6 @@ class CPU():
                 guessIndex = possMasts[randint(0, len(possMasts)-1)]
                 shipMast = hitDict[guessIndex]
             if restartNeeded:
-                print "restart"
                 possMasts = []
                 self.placeShips(state)
                 return
@@ -266,7 +258,6 @@ class CPU():
                         continue
             if restartNeeded:
                 # possMasts = []
-                print "restart"
                 self.placeShips(state)
                 return
                 i -= 1
@@ -296,11 +287,8 @@ for i in range(0, state.totalShips):
     for i in range(0, len(coordinates)):
         coordinate = coordinates[i]
         coordinates[i] = (coordinate[0]-1, coordinate[1]-1)
-        print coordinate
     coordinates = (coordinates[0], coordinates[1], coordinates[2])
     state.placeShip(coordinates, 0)
-    print coordinates
-    print state.playerShips
 #defining where the ship is
 
 

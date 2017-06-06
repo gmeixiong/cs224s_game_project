@@ -67,7 +67,7 @@ def parseFireInput(state):
 	      status = len(coordinates)
 	      if status >= 2:
 	      	status = 2
-	      if status == 1 or referencedCoordinate is not None and len(re.findall("(?:.*)(fire|shoot)(?:.*)", userInput)) > 0:
+	      if status == 1 or referencedCoordinate is not None and len(re.findall("(?:.*)(fire|shoot|attack|go)(?:.*)", userInput)) > 0:
 	      	#coordinates were parsed. firing at input target. add target to list. return whether target was hit or miss.
 	      	if len(re.findall("(?:.*)(have)(?:.*)", userInput)) > 0:
 	      		if len(re.findall("(?:.*)(fire|target|shot|done|attack)(?:.*)", userInput)) > 0:
@@ -126,7 +126,7 @@ def parseFireInput(state):
 	      				print("Row: %d, Column: %d\n") % (state.targeted[i][0], state.targeted[i][1])
 	      		else:
 	      			print("You have not fired at any points yet.")
-	      			
+
 	      	elif len(re.findall("(?:.*)(ship|boat)(?:.*)", userInput)) > 0:
       			print("You're ships are stationed at the following coordinates: ")
       			for i in range(len(state.playerShips)):

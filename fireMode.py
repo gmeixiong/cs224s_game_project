@@ -112,7 +112,7 @@ def parseFireInput(state):
 	  		else:
 	  			response = multipleTargetsResponses[random.randint(0, len(multipleTargetsResponses)) - 1]
 	      		print response
-	      elif len(re.findall("(?:.*)(last|past|previous|fire|gone|shoot|shot)(?:.*)", userInput)) > 0:
+	      elif len(re.findall("(?:.*)(last|past|previous|fire|gone|shoot|shot|attack)(?:.*)", userInput)) > 0:
 	      	print("You have already targeted the following coordinates: ")
 	      	for i in range(len(state.targeted)):
 	      		print("Row: %d, Column: %d\n") % (state.targeted[i][0], state.targeted[i][1])

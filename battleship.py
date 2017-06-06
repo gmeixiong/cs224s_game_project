@@ -117,6 +117,9 @@ class State():
                 return True
         return False
 
+    def restart(self):
+        playGame()
+
 
 class CPU():
     def __init__(self):

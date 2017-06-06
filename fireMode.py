@@ -101,14 +101,17 @@ def parseFireInput(state):
 	      		if len(re.findall("(?:.*)(fire|target|shot|done|gone|attack|shoot)(?:.*)", userInput)) > 0:
 	      			if len(state.targeted) > 0:
 		      			print("You have already targeted the following coordinates: ")
-		      			for i in range(len(state.targeted)):
-		      				print("Row: %d, Column: %d\n") % (state.targeted[i][0], state.targeted[i][1])
+		      			targets = list(state.targeted)
+		      			for i in range(len(targets)):
+		      				print("Row: %d, Column: %d\n") % (targets[i][0], targets[i][1])
 		      		else:
 		      			print("You have not fired at any points yet.")
 		      	elif len(re.findall("(?:.*)(ship|boat)(?:.*)", userInput)) > 0:
 	      			print("You're ships are stationed at the following coordinates: ")
-	      			for i in range(len(state.playerShips)):
-	  					print("Row: %d, Column: %d\n") % (state.playerShips[i][0], state.playerShips[i][1])
+	      			ships = list(state.playerShips)
+					for i in range(len(ships)):
+						print("Row: %d, Column: %d\n") % (ships[i][0], ships[i][1])
+						#self.coordinates is list of user's ships coordinates. each coordinate entry is a 2 element array where [0] is row and [1] is column
 	  		else:
 	  			response = multipleTargetsResponses[random.randint(0, len(multipleTargetsResponses)) - 1]
 	      		print response
@@ -116,21 +119,25 @@ def parseFireInput(state):
 	    elif len(re.findall("(?:.*)(have|previous|last|past|did)(?:.*)", userInput)) > 0:
 	      	if len(re.findall("(?:.*)(hit|destroy|land)(?:.*)", userInput)) > 0:
 		      	print("You have hit ships at the following coordinates: ")
-		      	for i in range(len(state.hit)):
-		      		print("Row: %d, Column: %d\n") % (state.hit[i][0], state.hit[i][1])
+		      	hits = list(state.hit)
+		      	for i in range(len(hits)):
+		      		print("Row: %d, Column: %d\n") % (hits[i][0], hits[i][1])
 
       		elif len(re.findall("(?:.*)(fire|target|shot|done|gone|attack|shoot)(?:.*)", userInput)) > 0:
       			if len(state.targeted) > 0:
 	      			print("You have already targeted the following coordinates: ")
-	      			for i in range(len(state.targeted)):
-	      				print("Row: %d, Column: %d\n") % (state.targeted[i][0], state.targeted[i][1])
+	      			targets = list(state.targeted)
+	      			for i in range(len(targets)):
+	      				print("Row: %d, Column: %d\n") % (targets[i][0], targets[i][1])
 	      		else:
 	      			print("You have not fired at any points yet.")
 
 	      	elif len(re.findall("(?:.*)(ship|boat)(?:.*)", userInput)) > 0:
       			print("You're ships are stationed at the following coordinates: ")
-      			for i in range(len(state.playerShips)):
-  					print("Row: %d, Column: %d\n") % (state.playerShips[i][0], state.playerShips[i][1])
+      			ships = list(state.playerShips)
+				for i in range(len(ships)):
+					print("Row: %d, Column: %d\n") % (ships[i][0], ships[i][1])
+					#self.coordinates is list of user's ships coordinates. each coordinate entry is a 2 element array where [0] is row and [1] is column
 
 		elif len(re.findall("(?:.*)(my)(?:.*)", userInput)) > 0:
 			print("You're ships are stationed at the following coordinates: ")

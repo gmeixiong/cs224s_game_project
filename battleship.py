@@ -26,15 +26,10 @@ class State():
 
     def guessed(self, coordinate):#zero index
         coordinate = (coordinate[0], coordinate[1])
-        if coordinate in self.targeted:
-            print "dafsfa"
-        else:
-            print self.targeted
         return coordinate in self.targeted
 
 
     def placeShip(self, coordinates, player):
-        print coordinates
         if player == 1:
             for coordinate in coordinates:
                 self.cpuBoard[coordinate[0]][coordinate[1]] = "S"
@@ -66,13 +61,10 @@ class State():
                 return False
         elif player == 0:
             self.targeted.add(coordinate)
-            print "******"
-            print self.targeted
             if self.cpuBoard[row][col] == "S":
                 self.cpuBoard[row][col] = "H"
                 self.history.append((0, coordinate, "H"))
                 self.hit.add(coordinate)
-                print self.cpuShips
                 self.cpuShips.remove((row, col))
                 return True
             elif self.cpuBoard[row][col] == "O":
@@ -115,7 +107,19 @@ class State():
         return False
 
     def checkFree(self, coordinate):#only use for placements
+<<<<<<< HEAD
         return not self.playerBoard[coordinate[0]][coordinate[1]] == "S"
+=======
+        return not self.playerBoard[coordinate[0]-1][coordinate[1]-1] == "S"
+
+    def neighborsFree(self, coordinate):#checks plus wise to see if there are any open and valid spots
+        coordinates = [(row+1, col), (row-1, col), (row, col+1), (row, col-1)]
+        for coord in coordinates:
+            if self.checkValid(coord) and self.checkFree(coord):
+                return True
+        return False
+
+>>>>>>> 52aaaa051c58c9306b918a12182fb373917ccdc7
 
 
 class CPU():
@@ -219,7 +223,6 @@ class CPU():
                 guessIndex = possMasts[randint(0, len(possMasts)-1)]
                 shipMast = hitDict[guessIndex]
             if restartNeeded:
-                print "restart"
                 possMasts = []
                 self.placeShips(state)
                 return
@@ -266,7 +269,6 @@ class CPU():
                         continue
             if restartNeeded:
                 # possMasts = []
-                print "restart"
                 self.placeShips(state)
                 return
                 i -= 1
@@ -296,7 +298,6 @@ print "Let's play Battleship!"
 state = State()
 cpu = CPU()
 cpu.placeShips(state)
-print state.cpuShips
 
 for i in range(0, state.totalShips):
     # inputList = raw_input("Where do you want your first ship to be?").split()
@@ -324,11 +325,8 @@ for i in range(0, state.totalShips):
     for i in range(0, len(coordinates)):
         coordinate = coordinates[i]
         coordinates[i] = (coordinate[0]-1, coordinate[1]-1)
-        print coordinate
     coordinates = (coordinates[0], coordinates[1], coordinates[2])
     state.placeShip(coordinates, 0)
-    print coordinates
-    print state.playerShips
 #defining where the ship is
 
 

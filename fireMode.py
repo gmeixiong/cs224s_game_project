@@ -67,10 +67,10 @@ def parseFireInput(state):
 	      status = len(coordinates)
 	      if status >= 2:
 	      	status = 2
-	      if status == 1 or self.referencedCoordinate is not None and len(re.findall("(?:.*)(fire|shoot)(?:.*)", userInput)) > 0:
+	      if status == 1 or referencedCoordinate is not None and len(re.findall("(?:.*)(fire|shoot)(?:.*)", userInput)) > 0:
 	      	#coordinates were parsed. firing at input target. add target to list. return whether target was hit or miss.
 	      	if len(re.findall("(?:.*)(have)(?:.*)", userInput)) > 0:
-	      		if len(re.findall("(?:.*)(fire|target|shot|done)(?:.*)", userInput)) > 0:
+	      		if len(re.findall("(?:.*)(fire|target|shot|done|attack)(?:.*)", userInput)) > 0:
 	      			if coordinates[0] in state.targeted:
 	      				print(random.choice(haveFiredResponses))
 	      			else:
@@ -112,7 +112,7 @@ def parseFireInput(state):
 	  		else:
 	  			response = multipleTargetsResponses[random.randint(0, len(multipleTargetsResponses)) - 1]
 	      		print response
-	      elif len(re.findall("(?:.*)(last|past|previous|fire|gone|shoot|shot)(?:.*)", userInput)) > 0:
+	      elif len(re.findall("(?:.*)(last|past|previous|fire|gone|shoot|shot|attack)(?:.*)", userInput)) > 0:
 	      	print("You have already targeted the following coordinates: ")
 	      	for i in range(len(state.targeted)):
 	      		print("Row: %d, Column: %d\n") % (state.targeted[i][0], state.targeted[i][1])
@@ -124,8 +124,9 @@ def parseFireInput(state):
 
 	      elif len(re.findall("(?:.*)(my)(?:.*)", userInput)) > 0:
 	      	print("You're ships are stationed at the following coordinates: ")
-	      	for i in range(len(state.playerShips)):
-	      		print("Row: %d, Column: %d\n") % (self.myShips[i][0], self.myShips[i][1])
+	      	ships = list(state.playerShips)
+	      	for i in range(len(ships)):
+	      		print("Row: %d, Column: %d\n") % (ships[i][0], ships[i][1])
 	      		#self.coordinates is list of user's ships coordinates. each coordinate entry is a 2 element array where [0] is row and [1] is column
 
 	      else:

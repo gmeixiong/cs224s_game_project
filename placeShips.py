@@ -152,7 +152,7 @@ def parseShipPlacement(state):
 								userInput = raw_input("Sorry I don't understand. Let's try again. Where would you like to place your ship?")
 						else:
 							coordinates.append(poss_coords[0])
-							resp = "Great! I'll place your ship at coordinates:"
+							resp = "I'll see if I can place your ship at coordinates:"
 							for c in coordinates:
 								resp = resp + " " + coordStr(c)
 							print resp
@@ -165,7 +165,7 @@ def parseShipPlacement(state):
 							userInput = raw_input("Sorry, I didn't get that. For your last coordinate, do you want to make it "+ coordStr(poss_coords[0]) + " or " + coordStr(poss_coords[1]) + 
 						"?")  
 							last_coord = which_coord(poss_coords[0], poss_coords[1], userInput.lower())
-						print "Great! I'll make your last coordinate " + coordStr(last_coord) + ". I'll go ahead and place your ship now!"
+						print "Great, so your last coordinate is " + coordStr(last_coord) + ". Let me see if I can place your ship!"
 						coordinates.append(last_coord)
 						##ADD AFFIRMING AND GETTING LAST COORDINATE, AFTER FINDING MISSING COORDINATE
 						
@@ -175,7 +175,7 @@ def parseShipPlacement(state):
 				dum_co.append(co)
 				if state.aligned(dum_co):
 					coordinates.append(co)
-					resp = "Great! I'll place your ship at coordinates:"
+					resp = "Great! I'll see if I can place your ship at coordinates:"
 					for c in coordinates:
 						resp = resp + " " + coordStr(c)
 					print resp
@@ -190,7 +190,7 @@ def parseShipPlacement(state):
 				dum_co.extend(coord)
 				if state.aligned(dum_co):
 					coordinates.extend(coord)
-					resp = "Great! I'll place your ship at coordinates:"
+					resp = "I'll see if I can place your ship at coordinates:"
 					for c in coordinates:
 						resp = resp + " " + coordStr(c)
 					print resp
@@ -208,7 +208,7 @@ def parseShipPlacement(state):
 						if 'n' in userInput.lower() or 'change' in userInput.lower():
 							userInput = raw_input("Do you want to place your ship at a different location?")
 							if 'n' in userInput.lower():
-								print 'Ok so the last coordinate will have to be ' + coordStr(poss_coords[0]) + '. I will place your ship now!'
+								print 'Ok so the last coordinate will have to be ' + coordStr(poss_coords[0]) + '. Let me see if I can place your ship here!'
 								coordinates.append(poss_coords[0])
 							elif 'y' in userInput.lower():
 								coordinates = []
@@ -218,7 +218,7 @@ def parseShipPlacement(state):
 								userInput = raw_input("Sorry I don't understand. Let's try again. Where would you like to place your ship?")
 						else:
 							coordinates.append(poss_coords[0])
-							resp = "Great! I'll place your ship at coordinates:"
+							resp = "I'll see if I can place your ship at coordinates:"
 							for c in coordinates:
 								resp = resp + " " + coordStr(c)
 							print resp
@@ -244,7 +244,7 @@ def parseShipPlacement(state):
 			else:
 				if state.aligned(coord):
 					coordinates.extend(coord)
-					resp = "Great! I'll place your ship at coordinates:"
+					resp = "I'll see if I can place your ship at coordinates:"
 					for c in coordinates:
 						resp = resp + " " + coordStr(c)
 					print resp

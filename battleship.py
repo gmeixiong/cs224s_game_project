@@ -107,9 +107,6 @@ class State():
         return False
 
     def checkFree(self, coordinate):#only use for placements
-<<<<<<< HEAD
-        return not self.playerBoard[coordinate[0]][coordinate[1]] == "S"
-=======
         return not self.playerBoard[coordinate[0]-1][coordinate[1]-1] == "S"
 
     def neighborsFree(self, coordinate):#checks plus wise to see if there are any open and valid spots
@@ -119,7 +116,6 @@ class State():
                 return True
         return False
 
->>>>>>> 52aaaa051c58c9306b918a12182fb373917ccdc7
 
 
 class CPU():
@@ -303,13 +299,12 @@ for i in range(0, state.totalShips):
     # inputList = raw_input("Where do you want your first ship to be?").split()
     # state.placeShip([(int(inputList[0]), int(inputList[1])), (int(inputList[2]), int(inputList[3])), (int(inputList[4]), int(inputList[5]))], 0)
     
-    print 'starting again'
+    # print 'starting again'
     validShipPlacement = False
     while not validShipPlacement:
-        print str(state)
         coordinates = parseShipPlacement(state)
         overlap = getOverlap(state, coordinates)
-        print overlap
+        # print overlap
         if len(overlap) == 0:
             validShipPlacement = True
         else:
@@ -317,11 +312,11 @@ for i in range(0, state.totalShips):
             for o in overlap:
                 resp = resp + " " + coordStr(o)
             print resp + ". Please pick another ship placement"
-            coordinates = parseShipPlacement(state)
-        print 'OK' + str(validShipPlacement)
+            # coordinates = parseShipPlacement(state)
+        # print 'OK' + str(validShipPlacement)
 
 
-
+    print "Great, I'll place your ship now!"
     for i in range(0, len(coordinates)):
         coordinate = coordinates[i]
         coordinates[i] = (coordinate[0]-1, coordinate[1]-1)

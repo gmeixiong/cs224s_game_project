@@ -59,9 +59,15 @@ def get_other_coord(coordinates):
 		print 'THESE COORDINATES DON\'T ALIGN'
 	return poss_coords
 
+def coordStr(c):
+	rows=['0','a','b','c','d','e']
+	return rows[c[0]]+str(c[1])
+
 def which_coord(c1, c2, response):
-	sc1 = str(c1)[1:-1]
-	sc2 = str(c2)[1:-1]
+	# sc1 = str(c1)[1:-1]
+	# sc2 = str(c2)[1:-1]
+	sc1 = coordStr(c1)
+	sc2 = coordStr(c2)
 	if 'first' in response or sc1 in response or sc1.replace(" ", "") in response or sc1.replace(",", "") in response:
 		return c1
 	elif 'second' in response or sc2 in response or sc2.replace(" ", "") in response or sc2.replace(",", "") in response:
@@ -94,15 +100,15 @@ def parseShipPlacement(state):
 				dum_co.append(co)
 				poss_coords = get_other_coord(dum_co)
 				if len(poss_coords) == 0:
-					userInput = raw_input("Sorry, that coordinate doesn't align with your first coordinate " + str(co) + " . Please tell me two more coordinates that align with this coordinate")
+					userInput = raw_input("Sorry, that coordinate doesn't align with your first coordinate " + coordStr(co) + " . Please tell me two more coordinates that align with this coordinate")
 				else:
 					coordinates.append(co)
 					if len(poss_coords) == 1:
-						userInput = raw_input("Ok great! So the last coordinate will be " + str(poss_coords[0]) + ", correct?")
+						userInput = raw_input("Ok great! So the last coordinate will be " + coordStr(poss_coords[0]) + ", correct?")
 						if 'n' in userInput.lower() or 'change' in userInput.lower():
 							userInput = raw_input("Do you want to place your ship at a different location?")
 							if 'n' in userInput.lower():
-								print 'Ok so the last coordinate will have to be ' + str(poss_coords[0]) + '. I will place your ship now!'
+								print 'Ok so the last coordinate will have to be ' + coordStr(poss_coords[0]) + '. I will place your ship now!'
 								coordinates.append(poss_coords[0])
 							elif 'y' in userInput.lower():
 								coordinates = []
@@ -111,14 +117,14 @@ def parseShipPlacement(state):
 								coordinates = []
 								userInput = raw_input("Sorry I don't understand. Let's try again. Where would you like to place your ship?")
 					else:
-						userInput = raw_input("Great, so for your last coordinate, do you want to make it "+ str(poss_coords[0]) + " or " + str(poss_coords[1]) + 
+						userInput = raw_input("Great, so for your last coordinate, do you want to make it "+ coordStr(poss_coords[0]) + " or " + coordStr(poss_coords[1]) + 
 						"?")
 						last_coord = which_coord(poss_coords[0], poss_coords[1], userInput.lower())
 						while last_coord[0] < 0:
-							userInput = raw_input("Sorry, I didn't get that. For your last coordinate, do you want to make it "+ str(poss_coords[0]) + " or " + str(poss_coords[1]) + 
+							userInput = raw_input("Sorry, I didn't get that. For your last coordinate, do you want to make it "+ coordStr(poss_coords[0]) + " or " + coordStr(poss_coords[1]) + 
 						"?")  
 							last_coord = which_coord(poss_coords[0], poss_coords[1], userInput.lower())
-						print "Great! I'll make your last coordinate " + str(last_coord) + ". I'll go ahead and place your ship now!"
+						print "Great! I'll make your last coordinate " + coordStr(last_coord) + ". I'll go ahead and place your ship now!"
 						coordinates.append(last_coord)
 						##ADD AFFIRMING AND GETTING LAST COORDINATE, AFTER FINDING MISSING COORDINATE
 						
@@ -128,7 +134,10 @@ def parseShipPlacement(state):
 				dum_co.append(co)
 				if aligned(dum_co):
 					coordinates.append(co)
-					print "Great! I'll see if we can place your ship at coordinates: " + str(coordinates)
+					resp = "Great! I'll place your ship at coordinates:"
+					for c in coordinates:
+						resp = resp + " " + coordStr(c)
+					print resp
 				else:
 					userInput = raw_input("Sorry, that last coordinate doesn't align with the other two coordinates you picked. Please tell me one last coordinate that aligns with your previous selected ones")
 
@@ -140,9 +149,13 @@ def parseShipPlacement(state):
 				dum_co.extend(coord)
 				if aligned(dum_co):
 					coordinates.extend(coord)
-					print "Great! I'll place your ship at coordinates: " + str(coordinates)
+					resp = "Great! I'll place your ship at coordinates:"
+					for c in coordinates:
+						resp = resp + " " + coordStr(c)
+					print resp
+					# print "Great! I'll place your ship at coordinates: " + str(coordinates)
 				else:
-					userInput = raw_input("Sorry, those coordinates don't align with your first coordinate " + str(coordinates[0]) + " . Please tell me two more coordinates that align with this coordinate")
+					userInput = raw_input("Sorry, those coordinates don't align with your first coordinate " + coordStr(coordinates[0]) + " . Please tell me two more coordinates that align with this coordinate")
 			elif len(coordinates) == 0:
 				poss_coords = get_other_coord(coord)
 				if len(poss_coords) == 0:
@@ -150,11 +163,11 @@ def parseShipPlacement(state):
 				else:
 					coordinates.extend(coord)
 					if len(poss_coords) == 1:
-						userInput = raw_input("Ok great! So the last coordinate will be " + str(poss_coords[0]) + ", correct?")
+						userInput = raw_input("Ok great! So the last coordinate will be " + coordStr(poss_coords[0]) + ", correct?")
 						if 'n' in userInput.lower() or 'change' in userInput.lower():
 							userInput = raw_input("Do you want to place your ship at a different location?")
 							if 'n' in userInput.lower():
-								print 'Ok so the last coordinate will have to be ' + str(poss_coords[0]) + '. I will place your ship now!'
+								print 'Ok so the last coordinate will have to be ' + coordStr(poss_coords[0]) + '. I will place your ship now!'
 								coordinates.append(poss_coords[0])
 							elif 'y' in userInput.lower():
 								coordinates = []
@@ -164,28 +177,42 @@ def parseShipPlacement(state):
 								userInput = raw_input("Sorry I don't understand. Let's try again. Where would you like to place your ship?")
 					
 					else:
-						userInput = raw_input("Great, so for your last coordinate, do you want to make it "+ str(poss_coords[0]) + " or " + str(poss_coords[1]) + 
+						userInput = raw_input("Great, so for your last coordinate, do you want to make it "+ coordStr(poss_coords[0]) + " or " + coordStr(poss_coords[1]) + 
 						"?")
 						last_coord = which_coord(poss_coords[0], poss_coords[1], userInput.lower())
 						while last_coord[0] < 0:
 							userInput = raw_input("Sorry, I didn't get that. For your last coordinate, do you want to make it "+ str(poss_coords[0]) + " or " + str(poss_coords[1]) + 
 						"?")  
 							last_coord = which_coord(poss_coords[0], poss_coords[1], userInput.lower())
-						print "Great! I'll make your last coordinate " + str(last_coord) + ". I'll go ahead and place your ship now!"
+						print "Great! I'll make your last coordinate " + coordStr(last_coord) + ". I'll go ahead and place your ship now!"
 						coordinates.append(last_coord)
 						##ADD AFFIRMING AND GETTING LAST COORDINATE, AFTER FINDING MISSING COORDINATE
 
 		elif len(coord) == 3:
 			if len(coordinates) != 0:
-				userInput = raw_input("Sorry, you're providing too many coordinates. So far, your ship covers " + str(coordinates) + ". Which other coordinates do you want this ship to cover? ")
+				resp = "Sorry, you're providing too many coordinates. So far, your ship covers"
+					for c in coordinates:
+						resp = resp + " " + coordStr(c)
+				userInput = raw_input(resp + ". Which other coordinates do you want this ship to cover? ")
 			else:
 				if aligned(coord):
 					coordinates.extend(coord)
-					print "Great! I'll place your ship at coordinates: " + str(coordinates)
+					resp = "Great! I'll place your ship at coordinates:"
+					for c in coordinates:
+						resp = resp + " " + coordStr(c)
+					print resp
+					# print "Great! I'll place your ship at coordinates: " + str(coordinates)
 				else:
 					userInput = raw_input("Sorry, these coordinates don't line up together. Which coordinates would you like your ship to cover?")
 		else:
-			userInput = raw_input("Sorry, you're providing too many coordinates. So far, your ship covers " + str(coordinates) + ". Which other coordinates do you want this ship to cover? ")
+			resp = "Sorry, you're providing too many coordinates. So far, your ship covers"
+			if len(coordinates) == 0: 
+				resp += " no coordinates"
+			else:
+				for c in coordinates:
+					resp = resp + " " + coordStr(c)
+			userInput = raw_input(resp + ". Which other coordinates do you want this ship to cover? ")
+			
 	
 	return coordinates
 

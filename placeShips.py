@@ -12,7 +12,7 @@ def aligned(coordinates):
     if coordinates[0][1] == coordinates[1][1] and coordinates[1][1] == coordinates[2][1]:
         return True
 
-def get_other_coord(coordinates):
+def get_other_coord(state, coordinates):
 	first_coord = coordinates[0]
 	second_coord = coordinates[1]
 
@@ -24,16 +24,22 @@ def get_other_coord(coordinates):
 			print 'ERROR, same coordinates'
 		elif diff == 1:
 			if second_coord[1] > first_coord[1]:
-				poss_coords.append([first_coord[0], second_coord[1]+1])
-				if first_coord[1]-1 > 0: poss_coords.append([first_coord[0], first_coord[1]-1])
+				if state.checkValid([first_coord[0], second_coord[1]+1]):
+					poss_coords.append([first_coord[0], second_coord[1]+1])
+				if state.checkValid([first_coord[0], first_coord[1]-1]):
+					poss_coords.append([first_coord[0], first_coord[1]-1])
 			else:
-				poss_coords.append([first_coord[0], first_coord[1]+1])
-				if second_coord[1]-1 > 0: poss_coords.append([first_coord[0], second_coord[1]-1])
+				if state.checkValid([first_coord[0], first_coord[1]+1]):
+					poss_coords.append([first_coord[0], first_coord[1]+1])
+				if state.checkValid([first_coord[0], second_coord[1]-1]):
+					poss_coords.append([first_coord[0], second_coord[1]-1])
 		elif diff == 2:
 			if second_coord[1] > first_coord[1]:
-				poss_coords.append([first_coord[0], first_coord[1]+1])
+				if state.checkValid([first_coord[0], first_coord[1]+1]):
+					poss_coords.append([first_coord[0], first_coord[1]+1])
 			else:
-				poss_coords.append([first_coord[0], first_coord[1]-1])
+				if state.checkValid([first_coord[0], first_coord[1]-1]):
+					poss_coords.append([first_coord[0], first_coord[1]-1])
 		else: 
 			print 'ERROR, coordinates don\'t align'
 
@@ -43,16 +49,22 @@ def get_other_coord(coordinates):
 			print 'ERROR, same coordinates'
 		elif diff == 1:
 			if second_coord[0] > first_coord[0]:
-				if first_coord[0]-1 > 0: poss_coords.append([first_coord[0]-1, second_coord[1]])
-				poss_coords.append([second_coord[0]+1, first_coord[1]])
+				if state.checkValid([first_coord[0]-1, second_coord[1]]):
+					poss_coords.append([first_coord[0]-1, second_coord[1]])
+				if state.checkValid([second_coord[0]+1, first_coord[1]]):
+					poss_coords.append([second_coord[0]+1, first_coord[1]])
 			elif second_coord[0] < first_coord[0]:
-				poss_coords.append([first_coord[0]+1, second_coord[1]])
-				if second_coord[0]-1 > 0: poss_coords.append([second_coord[0]-1, first_coord[1]])
+				if state.checkValid([first_coord[0]+1, second_coord[1]]):
+					poss_coords.append([first_coord[0]+1, second_coord[1]])
+				if state.checkValid([second_coord[0]-1, first_coord[1]]):
+					poss_coords.append([second_coord[0]-1, first_coord[1]])
 		elif diff == 2:
 			if second_coord[0] > first_coord[0]:
-				poss_coords.append([first_coord[0]+1, first_coord[1]])
+				if state.checkValid([first_coord[0]+1, first_coord[1]]):
+					poss_coords.append([first_coord[0]+1, first_coord[1]])
 			else:
-				poss_coords.append([first_coord[0]-1, first_coord[1]])
+				if state.checkValid([first_coord[0]-1, first_coord[1]]):
+					poss_coords.append([first_coord[0]-1, first_coord[1]])
 		else: 
 			print 'ERROR, coordinates don\'t align'
 	else:
@@ -98,7 +110,7 @@ def parseShipPlacement(state):
 			elif len(coordinates) == 1:
 				dum_co = coordinates
 				dum_co.append(co)
-				poss_coords = get_other_coord(dum_co)
+				poss_coords = get_other_coord(state, dum_co)
 				if len(poss_coords) == 0:
 					userInput = raw_input("Sorry, that coordinate doesn't align with your first coordinate " + coordStr(co) + " . Please tell me two more coordinates that align with this coordinate")
 				else:
@@ -132,7 +144,7 @@ def parseShipPlacement(state):
 			elif len(coordinates)==2: 
 				dum_co = coordinates
 				dum_co.append(co)
-				if aligned(dum_co):
+				if state.aligned(dum_co):
 					coordinates.append(co)
 					resp = "Great! I'll place your ship at coordinates:"
 					for c in coordinates:
@@ -147,7 +159,7 @@ def parseShipPlacement(state):
 			elif len(coordinates) == 1:
 				dum_co = coordinates
 				dum_co.extend(coord)
-				if aligned(dum_co):
+				if state.aligned(dum_co):
 					coordinates.extend(coord)
 					resp = "Great! I'll place your ship at coordinates:"
 					for c in coordinates:
@@ -157,7 +169,7 @@ def parseShipPlacement(state):
 				else:
 					userInput = raw_input("Sorry, those coordinates don't align with your first coordinate " + coordStr(coordinates[0]) + " . Please tell me two more coordinates that align with this coordinate")
 			elif len(coordinates) == 0:
-				poss_coords = get_other_coord(coord)
+				poss_coords = get_other_coord(state, coord)
 				if len(poss_coords) == 0:
 					userInput = raw_input("Sorry, those coordinates don't align. At which coordinates would you like to place your ship?")
 				else:
@@ -195,7 +207,7 @@ def parseShipPlacement(state):
 					resp = resp + " " + coordStr(c)
 				userInput = raw_input(resp + ". Which other coordinates do you want this ship to cover? ")
 			else:
-				if aligned(coord):
+				if state.aligned(coord):
 					coordinates.extend(coord)
 					resp = "Great! I'll place your ship at coordinates:"
 					for c in coordinates:

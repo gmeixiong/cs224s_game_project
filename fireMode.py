@@ -11,6 +11,10 @@ def parseFireInput(state):
 	      # First Screen and Input
 	    firstAttackQueries = ["Please input a coordinate for attack!", "Where do you want to attack first?", "Initial target coordinates, captain?"]
 	    attackQueries = ["Please input a coordinate for attack!", "Next attack coordinates, captain?", "Where do you want to attack next?", "Where should we fire next?"]
+	    if len(state.targeted) > 5:
+	    	attackQueries = ["Please input a coordinate", "Next attack?", "Where next?"]
+	    if len(state.targeted) > 9:
+	    	attackQueries = ["Next?", "Awaiting orders..."]
 	    losingStarts = ["We're not out of this yet, Captain!", "It ain't over 'til it's over!", "Time for a comeback!"]
 	    winningStarts = ["We've got them on the ropes!", "Victory is on the horizon, Captain!", "We've got them right where we want them."]
 	    hitStarts = ["Let's get 'em again, Captain", "Once more, with feeling!", "Another!"]

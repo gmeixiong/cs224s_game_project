@@ -124,6 +124,8 @@ def parseShipPlacement(state):
 	noCoordinateResponses = ["Sorry. I didn't catch any coordinates in your response.", "I didn't catch where you said, Captain."]
 	genericPraise = ["Great!", "Perfect!", "Lovely!", "Awesome!", "Excellent!"]
 	tryPlaceResponses = ["I'll see if I can place your ship at coordinates: ", "I'll try placing your ship at coordinates: ", "I'll go check on the feasability of coordinates: "]
+	tooManyShipsResponses = ["Uhh Captain? We don't have ships that long.", "That's too many, Captain. Our ships can only cover three.", "Three be the magic number. Four is too many, and Five is right out!", "Sorry, you're providing too many coordinates."]
+	didntUnderstandResponses = ["Sorry, I didn't get that.", "Sorry I didn't understand that.", "Come again, Captain?"]
 
 	coordinates = []
 	while len(coordinates) < 3:
@@ -165,10 +167,10 @@ def parseShipPlacement(state):
 								coordinates.append(poss_coords[0])
 							elif 'y' in userInput.lower():
 								coordinates = []
-								userInput = raw_input("Cool, so where would you like to place your ship?")
+								userInput = raw_input(random.choice(genericPraise) + " " + random.choice(askForShipQueries))
 							else:	
 								coordinates = []
-								userInput = raw_input("Sorry I don't understand. Let's try again. Where would you like to place your ship?")
+								userInput = raw_input(random.choice(didntUnderstandResponses) + " Let's try again. Where would you like to place your ship?")
 						else:
 							coordinates.append(poss_coords[0])
 							resp = random.choice(tryPlaceResponses)
@@ -182,10 +184,10 @@ def parseShipPlacement(state):
 						"?")
 						last_coord = which_coord(poss_coords[0], poss_coords[1], userInput.lower())
 						while last_coord[0] < 0:
-							userInput = raw_input("Sorry, I didn't get that. For your last coordinate, do you want to make it "+ coordStr(poss_coords[0]) + " or " + coordStr(poss_coords[1]) + 
+							userInput = raw_input(random.choice(didntUnderstandResponses) + " For your last coordinate, do you want to make it "+ coordStr(poss_coords[0]) + " or " + coordStr(poss_coords[1]) + 
 						"?")  
 							last_coord = which_coord(poss_coords[0], poss_coords[1], userInput.lower())
-						print random.choice(genericPraise) +  " So your last coordinate is " + coordStr(last_coord) + ". Let me see if I can place your ship!"
+						print random.choice(genericPraise) +  " So your last coordinate is " + coordStr(last_coord) + ". " + random.choice(tryPlaceResponses)
 						coordinates.append(last_coord)
 						##ADD AFFIRMING AND GETTING LAST COORDINATE, AFTER FINDING MISSING COORDINATE
 						
@@ -204,7 +206,7 @@ def parseShipPlacement(state):
 
 		elif len(coord) == 2:
 			if len(coordinates) > 1:
-				userInput = raw_input("Sorry, you're providing too many coordinates. What's the last coordinate you'd like this ship to cover?")
+				userInput = raw_input(random.choice(tooManyShipsResponses) + " What's the last coordinate you'd like this ship to cover?")
 			elif len(coordinates) == 1:
 				dum_co = coordinates
 				dum_co.extend(coord)
@@ -224,7 +226,7 @@ def parseShipPlacement(state):
 				else:
 					coordinates.extend(coord)
 					if len(poss_coords) == 1:
-						userInput = raw_input("Ok great! So the last coordinate will be " + coordStr(poss_coords[0]) + ", correct?")
+						userInput = raw_input(random.choice(genericPraise) + " So the last coordinate will be " + coordStr(poss_coords[0]) + ", correct?")
 						if 'n' in userInput.lower() or 'change' in userInput.lower():
 							userInput = raw_input("Do you want to place your ship at a different location?")
 							if 'n' in userInput.lower():
@@ -235,7 +237,7 @@ def parseShipPlacement(state):
 								userInput = raw_input("Cool, so where would you like to place your ship?")
 							else:	
 								coordinates = []
-								userInput = raw_input("Sorry I don't understand. Let's try again. Where would you like to place your ship?")
+								userInput = raw_input(random.choice(didntUnderstandResponses) + " Let's try again. Where would you like to place your ship?")
 						else:
 							coordinates.append(poss_coords[0])
 							resp = random.choice(tryPlaceResponses)
@@ -248,16 +250,16 @@ def parseShipPlacement(state):
 						"?")
 						last_coord = which_coord(poss_coords[0], poss_coords[1], userInput.lower())
 						while last_coord[0] < 0:
-							userInput = raw_input("Sorry, I didn't get that. For your last coordinate, do you want to make it "+ str(poss_coords[0]) + " or " + str(poss_coords[1]) + 
+							userInput = raw_input(random.choice(didntUnderstandResponses) + " For your last coordinate, do you want to make it "+ str(poss_coords[0]) + " or " + str(poss_coords[1]) + 
 						"?")  
 							last_coord = which_coord(poss_coords[0], poss_coords[1], userInput.lower())
-						print "Great! I'll make your last coordinate " + coordStr(last_coord) + ". I'll see if I can place your ship now!"
+						print random.choice(genericPraise) + " I'll make your last coordinate " + coordStr(last_coord) + ". I'll see if I can place your ship now!"
 						coordinates.append(last_coord)
 						##ADD AFFIRMING AND GETTING LAST COORDINATE, AFTER FINDING MISSING COORDINATE
 
 		elif len(coord) == 3:
 			if len(coordinates) != 0:
-				resp = "Sorry, you're providing too many coordinates. So far, your ship covers"
+				resp = random.choice(tooManyShipsResponses) + " So far, your ship covers"
 				for c in coordinates:
 					resp = resp + " " + coordStr(c)
 				userInput = raw_input(resp + ". Which other coordinates do you want this ship to cover? ")
@@ -272,7 +274,7 @@ def parseShipPlacement(state):
 				else:
 					userInput = raw_input("Sorry, these coordinates don't line up together. Which coordinates would you like your ship to cover?")
 		else:
-			resp = "Sorry, you're providing too many coordinates. So far, your ship covers"
+			resp = random.choice(tooManyShipsResponses) + " So far, your ship covers"
 			if len(coordinates) == 0: 
 				resp += " no coordinates"
 			else:

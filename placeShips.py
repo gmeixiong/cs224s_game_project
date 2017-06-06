@@ -128,6 +128,13 @@ def parseShipPlacement(state):
 							else:	
 								coordinates = []
 								userInput = raw_input("Sorry I don't understand. Let's try again. Where would you like to place your ship?")
+						else:
+							coordinates.append(poss_coords[0])
+							resp = "Great! I'll place your ship at coordinates:"
+							for c in coordinates:
+								resp = resp + " " + coordStr(c)
+							print resp
+
 					else:
 						userInput = raw_input("Great, so for your last coordinate, do you want to make it "+ coordStr(poss_coords[0]) + " or " + coordStr(poss_coords[1]) + 
 						"?")
@@ -187,7 +194,13 @@ def parseShipPlacement(state):
 							else:	
 								coordinates = []
 								userInput = raw_input("Sorry I don't understand. Let's try again. Where would you like to place your ship?")
-					
+						else:
+							coordinates.append(poss_coords[0])
+							resp = "Great! I'll place your ship at coordinates:"
+							for c in coordinates:
+								resp = resp + " " + coordStr(c)
+							print resp
+						
 					else:
 						userInput = raw_input("Great, so for your last coordinate, do you want to make it "+ coordStr(poss_coords[0]) + " or " + coordStr(poss_coords[1]) + 
 						"?")

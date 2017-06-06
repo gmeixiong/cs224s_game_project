@@ -8,9 +8,15 @@ def aligned(coordinates):
     if coordinates[0] == coordinates[1] or coordinates[0] == coordinates[2] or coordinates[1] == coordinates[2]:
         return False
     if coordinates[0][0] == coordinates[1][0] and coordinates[1][0] == coordinates[2][0]:
-        return True
-    if coordinates[0][1] == coordinates[1][1] and coordinates[1][1] == coordinates[2][1]:
-        return True
+		coordinates = sorted(coordinates, key = lambda x: x[1])
+		if coordinates[0][1] + 1 == coordinates[1][1] and coordinates[1][1] + 1 == coordinates[2][1]:
+			return True
+    elif coordinates[0][1] == coordinates[1][1] and coordinates[1][1] == coordinates[2][1]:
+		coordinates = sorted(coordinates, key = lambda x: x[0])
+		if coordinates[0][0] + 1 == coordinates[1][0] and coordinates[1][0] + 1 == coordinates[2][0]:
+			return True
+    else:
+    	return False
 
 def get_other_coord(state, coordinates):
 	first_coord = coordinates[0]
@@ -200,7 +206,7 @@ def parseShipPlacement(state):
 							for c in coordinates:
 								resp = resp + " " + coordStr(c)
 							print resp
-						
+
 					else:
 						userInput = raw_input("Great, so for your last coordinate, do you want to make it "+ coordStr(poss_coords[0]) + " or " + coordStr(poss_coords[1]) + 
 						"?")

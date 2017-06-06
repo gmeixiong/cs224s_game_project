@@ -1,26 +1,13 @@
-#firing 
-# ask for coordinates for where to fire
-# ask about past attempts at firing
-# ask ask about my coordinates for ships
 import re
 import string
 import random
 from coord import *
-
-##CHANGE ALL SELF.VARS TO STATE.VAR
-
-# state.targeted = [] # list of all points that user has already targeted
-# state.hit = [] #list of all points that user has already hit (targeted points which were successful)
-# state.playerShips = [] #list of coordinates of user's ships. Each element of this list is a two-element list which represents row (0th element) x column (1st element)
 
 def parseFireInput(state):
 	referencedCoordinate = None
 	multipleTargetsResponses = ['Hey!! You can\'t fire at more than one place! Please try again!', 'No shooting at multiple places! Put in one coordinate!', 'Your Battleship is only equipped with one bullet per round! Please input one coordinate!',
 'Not enough ammo! Only enough for one coordinate!']
 	while True:
-	      #targetGrid is a battleship grid with the opponent's ships. Thinking about numpy array
-	      #from parseCoordinates, returns 0 if parse fail and 1 if parse success, 2 if parse returns multiple coordinats. coordinates will return with the 0th element as the row and 1st element as the column
-
 	      # First Screen and Input
 	    firstAttackQueries = ["Please input a coordinate for attack!", "Where do you want to attack first?", "Initial target coordinates, captain?"]
 	    attackQueries = ["Please input a coordinate for attack!", "Next attack coordinates, captain?", "Where do you want to attack next?", "Where should we fire next?"]
@@ -39,8 +26,6 @@ def parseFireInput(state):
 
 	      #Already Seen
 	    seenResponses = ["You've already fired here, Captain. Choose somewhere else.", "Can only do that once, Captain. Try again.", "Lightning doesn't strike in the same place twice, Captain. Try something else."]
-
-
 
 	    if state.prevResult == None:
 	      	userInput = raw_input(random.choice(firstAttackQueries))
@@ -62,13 +47,11 @@ def parseFireInput(state):
 	      	userInput = raw_input(query)
 	    userInput = userInput.lower()
 
-
-	    coordinates = get_coord(userInput) # parse coordinates will fill the coordinates list with the list of parsed coordinates. Returns 1 if 1 successful coordinate. returns 2 if more than one coordinate. Returns 0 otherwise.
+	    coordinates = get_coord(userInput)
 	    status = len(coordinates)
 	    if status >= 2:
 	    	status = 2
 	    if status == 1 or referencedCoordinate is not None and len(re.findall("(?:.*)(fire|shoot|attack|go)(?:.*)", userInput)) > 0:
-	      	#coordinates were parsed. firing at input target. add target to list. return whether target was hit or miss.
 	      	if len(re.findall("(?:.*)(have|did)(?:.*)", userInput)) > 0:
 	      		if len(re.findall("(?:.*)(fire|target|shot|done|attack)(?:.*)", userInput)) > 0:
 	      			coordinate = (coordinates[0][0], coordinates[0][1])
@@ -91,7 +74,6 @@ def parseFireInput(state):
 	      		if len(coordinates) == 0 and referencedCoordinate is not None:
 	      			coordinates.append(referencedCoordinate)
 	      		#state.targeted.append(coordinates[0]) ##
-	      		## APPEND THIS COORDINATE TO TARGETEDPOInts LIST
 	      		if state.guessed(coordinates[0]):#already guessed
 	      			print random.choice(seenResponses)
 	      			return parseFireInput(state)#just start the whole process over
@@ -112,7 +94,6 @@ def parseFireInput(state):
 	      			ships = list(state.playerShips)
 	      			for i in range(len(ships)):
 						print("Row: %d, Column: %d\n") % (ships[i][0], ships[i][1])
-						#self.coordinates is list of user's ships coordinates. each coordinate entry is a 2 element array where [0] is row and [1] is column
 	  		else:
 	  			response = multipleTargetsResponses[random.randint(0, len(multipleTargetsResponses)) - 1]
 	      		print response
@@ -138,14 +119,12 @@ def parseFireInput(state):
       			ships = list(state.playerShips)
       			for i in range(len(ships)):
 					print("Row: %d, Column: %d\n") % (ships[i][0], ships[i][1])
-					#self.coordinates is list of user's ships coordinates. each coordinate entry is a 2 element array where [0] is row and [1] is column
 
 		elif len(re.findall("(?:.*)(my)(?:.*)", userInput)) > 0:
 			print("You're ships are stationed at the following coordinates: ")
 			ships = list(state.playerShips)
 			for i in range(len(ships)):
 				print("Row: %d, Column: %d\n") % (ships[i][0], ships[i][1])
-				#self.coordinates is list of user's ships coordinates. each coordinate entry is a 2 element array where [0] is row and [1] is column
 
 	    else:
-	      	print("Sorry, I didn't quite catch that. Can you try again??")
+	      	print("Sorry, I didn't catch what you mean. Can you try again??")

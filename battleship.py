@@ -292,11 +292,8 @@ def getOverlap(state, coordinates):
     return overlap
 
 def playGame():
-    
-    print "game time started"
 
     state = State()
-    print state.playerShips
     cpu = CPU()
     cpu.placeShips(state)
 

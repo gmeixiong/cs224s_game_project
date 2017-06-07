@@ -77,10 +77,10 @@ class State():
                 #####They already went here
 
     def checkWin(self):
-        if len(state.playerShips) == 0:
+        if len(self.playerShips) == 0:
             print "CPU won..."
             return True
-        if len(state.cpuShips) == 0:
+        if len(self.cpuShips) == 0:
             print "Player Won!"
             return True
         return False

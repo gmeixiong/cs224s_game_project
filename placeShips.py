@@ -132,12 +132,12 @@ def parseShipPlacement(state):
 		userInput = userInput.lower()
 		coord = get_coord(userInput)
 		if len(re.findall("(?:.*)(have|did|where)(?:.*)", userInput)) > 0:
-      		if len(re.findall("(?:.*)(ship|boat)(?:.*)", userInput)) > 0:
-      			if len(state.playerShips) == 0:
-      				print("You have not placed any ships yet!")
-      			else: 				
-	      			print("You have placed ships at the following coordinates: ")
-	      			for coordinate in coordinates:
+			if len(re.findall("(?:.*)(ship|boat)(?:.*)", userInput)) > 0:
+				if len(state.playerShips) == 0:
+					print("You have not placed any ships yet!")
+				else:
+					print("You have placed ships at the following coordinates: ")
+					for coordinate in coordinates:
 						print("Row: %d, Column: %d\n") % (coordinate[0], coordinate[1])
       		else:
       			print("I'm not sure what you mean! Please try again")

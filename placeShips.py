@@ -129,6 +129,7 @@ def parseShipPlacement(state):
 
 	coordinates = []
 	while len(coordinates) < 3:
+		didOtherShit = False#checks for special case to see if it needs to tell you it didnt get any coordinates
 		userInput = userInput.lower()
 		coord = get_coord(userInput)
 		if len(re.findall("(?:.*)(have|did|where)(?:.*)", userInput)) > 0:
@@ -142,9 +143,13 @@ def parseShipPlacement(state):
 						print("Row: %d, Column: %d\n") % (ships[i][0], ships[i][1])
         		else:
       			        print("I'm not sure what you mean! Please try again")
+      		didOtherShit = True
 
 		if len(coord) == 0:
-			userInput = raw_input(random.choice(noCoordinateResponses) +  " " + random.choice(askForShipQueries))
+			if didOtherShit == True:
+				userInput = raw_input(random.choice(askForShipQueries))
+			else:
+				userInput = raw_input(random.choice(noCoordinateResponses) +  " " + random.choice(askForShipQueries))
 
 		elif len(coord) == 1:
 			co = coord[0]

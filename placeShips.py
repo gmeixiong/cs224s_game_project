@@ -140,8 +140,8 @@ def parseShipPlacement(state):
 					ships = list(state.playerShips)
 	      			for i in range(len(ships)):
 						print("Row: %d, Column: %d\n") % (ships[i][0], ships[i][1])
-      		else:
-      			print("I'm not sure what you mean! Please try again")
+        		else:
+      			        print("I'm not sure what you mean! Please try again")
 
 		if len(coord) == 0:
 			userInput = raw_input(random.choice(noCoordinateResponses) +  " " + random.choice(askForShipQueries))

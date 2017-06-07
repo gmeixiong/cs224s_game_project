@@ -137,8 +137,9 @@ def parseShipPlacement(state):
 					print("You have not placed any ships yet!")
 				else:
 					print("You have placed ships at the following coordinates: ")
-					for coordinate in coordinates:
-						print("Row: %d, Column: %d\n") % (coordinate[0], coordinate[1])
+					ships = list(state.playerShips)
+	      			for i in range(len(ships)):
+						print("Row: %d, Column: %d\n") % (ships[i][0], ships[i][1])
       		else:
       			print("I'm not sure what you mean! Please try again")
 

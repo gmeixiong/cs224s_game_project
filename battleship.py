@@ -188,7 +188,7 @@ class CPU():
                 guess = (min(self.firstHit[0], self.secondHit[0]) - 1, self.firstHit[1])
                 if guess not in self.history:
                     return guess
-        return self.firstGuess(self,board)
+        return self.firstGuess(board)
 
     def placeShips(self, state):
         board = state.cpuBoard

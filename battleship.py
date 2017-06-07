@@ -55,7 +55,7 @@ class State():
                     cpu.firstHit = None
                     cpu.secondHit = None
                 self.history.append((1, coordinate, "H"))
-                self.playerShips.remove((row, col))
+                self.playerShips.discard((row, col))
                 return True
             else:
                 self.history.append((1, coordinate, "M"))
@@ -66,7 +66,7 @@ class State():
                 self.cpuBoard[row][col] = "H"
                 self.history.append((0, coordinate, "H"))
                 self.hit.add(coordinate)
-                self.cpuShips.remove((row, col))
+                self.cpuShips.discard((row, col))
                 return True
             elif self.cpuBoard[row][col] == "O":
                 self.cpuBoard[row][col] = "M"
@@ -144,6 +144,7 @@ class CPU():
         while (row, col) in self.history:
             row = randint(0, len(board) - 1)
             col = randint(0, len(board[0]) - 1)
+        print "guessing"
         return (row, col)
 
     def secondGuess(self, board):
@@ -164,19 +165,23 @@ class CPU():
             possHits.append(4)
         guessIndex = possHits[randint(0, len(possHits)-1)]
         guess = hitDict[guessIndex]
+        numTries = 0
         while guess in self.history:
+            if numTries > 8:
+                return self.firstGuess(board)
             guessIndex = possHits[randint(0, len(possHits)-1)]
             guess = hitDict[guessIndex]
+            numTries += 1
         return guess
 
     def thirdGuess(self, board):
         if self.firstHit[0] == self.secondHit[0]:
             if max(self.firstHit[1], self.secondHit[1]) + 1 < len(board[0]):
-                guess = (firstHit[0], max(self.firstHit[1], self.secondHit[1]) + 1)
+                guess = (self.firstHit[0], max(self.firstHit[1], self.secondHit[1]) + 1)
                 if guess not in self.history:
                     return guess
             if min(self.firstHit[1], self.secondHit[1]) - 1 < 0:
-                guess = (firstHit[0], min(self.firstHit[1], self.secondHit[1]) - 1)
+                guess = (self.firstHit[0], min(self.firstHit[1], self.secondHit[1]) - 1)
                 if guess not in self.history:
                     return guess
         if self.firstHit[1] == self.secondHit[1]:#should be the case

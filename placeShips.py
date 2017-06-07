@@ -133,7 +133,8 @@ def parseShipPlacement(state):
 				if len(state.playerShips) > 0:
 					print "You have placed ships at the following coordinates: "
 	      			for i in range(len(list(state.playerShips))):
-						print("Row: %d, Column: %d\n") % (ships[i][0], ships[i][1])
+	      				ships = list(state.playerShips)
+	      				print("Row: %d, Column: %d\n") % (ships[i][0], ships[i][1])
 				if len(state.playerShips) == 0:
 					print "You have not placed any ships yet!"
 			else:
@@ -141,7 +142,10 @@ def parseShipPlacement(state):
 			didOtherShit = True
 
 		if len(coord) == 0:
-			userInput = raw_input(random.choice(noCoordinateResponses) +  " " + random.choice(askForShipQueries))
+			if didOtherShit == True:
+				userInput = raw_input(random.choice(askForShipQueries))
+			else:
+				userInput = raw_input(random.choice(noCoordinateResponses) +  " " + random.choice(askForShipQueries))
 			universalPrompt(userInput, state)
 
 		elif len(coord) == 1:

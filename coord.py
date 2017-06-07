@@ -30,7 +30,6 @@ def get_coord(userInput):
                   coord.append(int(col))
                   flag = True
                   coordinates.append(coord)
-                  print "append5"
 
             elif split[i] in ['col', 'column']:
                   if flag == True:
@@ -47,7 +46,6 @@ def get_coord(userInput):
                   coord.append(int(col))
                   flag = True
                   coordinates.append(coord)
-                  print "append6"
 
             elif split[i].startswith('row') and wordlen > 3:
                   if mergeFlag == True:
@@ -71,7 +69,6 @@ def get_coord(userInput):
                   coord.append(int(col))
 
                   coordinates.append(coord)
-                  print "append7"
 
             elif (split[i].startswith('col') or split[i].startswith('column')) and wordlen > 3:
                   if mergeFlag == True:
@@ -105,7 +102,6 @@ def get_coord(userInput):
                   coord.append(int(col))
 
                   coordinates.append(coord)
-                  print "append8"
 
       matches = re.findall("(?:\W|^|)[A-Ea-e]\s?[1-5](?:\W|$|)", userInput)
       if len(matches) == 1 and len(coordinates) < 1:
@@ -116,11 +112,9 @@ def get_coord(userInput):
             col = int(matches[0][-1].strip('\''))
             coord.append(row)
             coord.append(col)
-            print "append1"
             coordinates.append(coord)
       else:
             matches = re.findall("(?:\W|^|)[A-Ea-e][1-5](?:\W|$|)", userInput)
-            print matches
             for i in xrange(len(matches)):
                   matches[i] = matches[i].strip(" ")
                   coord = []
@@ -129,7 +123,6 @@ def get_coord(userInput):
                   col = int(matches[i][-1].strip('\''))
                   coord.append(row)
                   coord.append(col)
-                  print "append1"
                   coordinates.append(coord)
 
       matches1 = re.findall("(?:\W|^|)[1-5]\s?[A-Ea-e](?:\W|$|)", userInput)
@@ -141,12 +134,10 @@ def get_coord(userInput):
             col = int(matches1[0][0].strip('\''))
             coord.append(row)
             coord.append(col)
-            print "append2"
             coordinates.append(coord)
       else:
             if case2Flag == False:
                   matches1 = matches1 = re.findall("(?:\W|^|)[1-5][A-Ea-e](?:\W|$|)", userInput)
-                  print matches1
                   for i in xrange(len(matches1)):
                         matches1[i] = matches1[i].strip(" ")
                         coord = []
@@ -155,7 +146,6 @@ def get_coord(userInput):
                         col = int(matches1[i][0].strip('\''))
                         coord.append(row)
                         coord.append(col)
-                        print "append2"
                         coordinates.append(coord)
 
       matches2 = re.findall("[1-5]\,[1-5]", userInput)
@@ -164,7 +154,6 @@ def get_coord(userInput):
                   coord = []
                   coord.append(int(matches2[i][0].strip('\'')))
                   coord.append(int(matches2[i][-1].strip('\'')))
-                  print "append3"
                   coordinates.append(coord)
 
       # matches3 = re.findall("(?:\W|^)([1-5])\s([1-5])(?:\W|$)", userInput)
@@ -187,7 +176,7 @@ def get_coord(userInput):
 #       print("---------------------------------------------------------")
 
 #       # First Screen and Input
-#       userInput = raw_input("Where would you like to place your ship? ")
+#       userInput = raw_input(`)
 
 #       coordinates = []
 

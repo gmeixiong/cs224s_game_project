@@ -144,7 +144,6 @@ class CPU():
         while (row, col) in self.history:
             row = randint(0, len(board) - 1)
             col = randint(0, len(board[0]) - 1)
-        print "guessing"
         return (row, col)
 
     def secondGuess(self, board):
@@ -366,7 +365,7 @@ def playGame():
 
 #starting the game and printing the board
 localtime = time.localtime(time.time())
-timeOfDay = 14
+timeOfDay = localtime[3]
 
 if timeOfDay < 6:
     print "Why are you up at this hour playing Battleship? Anyway,"

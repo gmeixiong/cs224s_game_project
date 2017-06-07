@@ -119,7 +119,7 @@ def parseFireInput(state):
 	      		print response
 
 	    elif len(re.findall("(?:.*)(where|have|previous|last|past|did)(?:.*)", userInput)) > 0:
-	      	if len(re.findall("(?:.*)(hit|destroy|land)(?:.*)", userInput)) > 0:
+	      	if len(re.findall("(?:.*)(sunk|hit|destroy|land)(?:.*)", userInput)) > 0:
 		      	print("You have hit ships at the following coordinates: ")
 		      	hits = list(state.hit)
 		      	for i in range(len(hits)):

@@ -3,6 +3,18 @@ import string
 import random
 from coord import *
 
+def universalPrompt(userInput, state):
+	userInput = userInput.lower()
+	if "help" in userInput:
+		print "Possible Actions:"
+		print "1) Input coordinates to place ships i.e. a4, 4a, 1,3, row 1 col 3"
+		print "2) Ask where your ships are i.e. \"Where did I placed my ships?\""
+		print "3) Ask where you've fired i.e. \"Where have I fired?\""
+		print "4) Ask which ships you've sunk i.e. \"Which ships have I sunk\""
+	elif "start over" in userInput or "startover" in userInput or "restart" in userInput:
+	    print "Starting over"
+	    state.restart()
+
 def parseFireInput(state):
 	referencedCoordinate = None
 	multipleTargetsResponses = ['Hey!! You can\'t fire at more than one place! Please try again!', 'No shooting at multiple places! Put in one coordinate!', 'Your Battleship is only equipped with one bullet per round! Please input one coordinate!',
@@ -33,6 +45,7 @@ def parseFireInput(state):
 
 	    if state.prevResult == None:
 	      	userInput = raw_input(random.choice(firstAttackQueries))
+	      	universalPrompt(userInput, state)
 	    else:
 	      	query = random.choice(attackQueries)
 	      	roll = random.randint(1, 10)
@@ -51,15 +64,7 @@ def parseFireInput(state):
 	      	userInput = raw_input(query)
 	    userInput = userInput.lower()
 
-	    if "help" in userInput:
-	    	print "Possible Actions:"
-	    	print "1) Input coordinates to attack i.e. a4, 4a, 1,3, row 1 col 3"
-	    	print "2) Ask where your ships are i.e. \"Where did I placed my ships?\""
-	    	print "3) Ask where you've fired i.e. \"Where have I fired?\""
-	    	print "4) Ask which ships you've sunk i.e. \"Which ships have I sunk\""
-	    elif "start over" in userInput or "startover" in userInput:
-	    	print "Starting over"
-	    	state.restart()
+	    universalPrompt(userInput, state)
 
 
 	    coordinates = get_coord(userInput)

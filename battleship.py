@@ -136,6 +136,8 @@ class CPU():
             guess = self.firstGuess(board)
         self.history.add(guess)
         guess = (guess[0]+1, guess[1]+1)
+        if guess[0] > 5 or guess[0] > 5:
+            return self.firstGuess(board)
         return guess
 
     def firstGuess(self, board):
